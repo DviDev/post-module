@@ -19,7 +19,6 @@ class CreatePosts extends Migration
 
             $prop = PostEntityModel::props(null, true);
             $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->category_id)->unsigned()->nullable();
             $table->string($prop->title);
             $table->text($prop->content);
             $table->string($prop->thumbnail_image_path)->nullable();

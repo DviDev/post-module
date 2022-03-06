@@ -10,7 +10,6 @@ use Modules\Post\Repositories\PostRepository;
  * @link https://github.com/DaviMenezes
  * @property $id
  * @property $user_id
- * @property $category_id
  * @property $title
  * @property $content
  * @property $thumbnail_image_path
