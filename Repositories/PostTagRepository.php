@@ -3,7 +3,7 @@
 namespace Modules\Post\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\Post\Entities\PostTagEntityModel;
+use Modules\Post\Entities\PostTag\PostTagEntityModel;
 use Modules\Post\Models\PostTagModel;
 
 /**
