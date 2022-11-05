@@ -1,35 +1,26 @@
 <?php
 
-namespace Modules\Post\Entities;
+namespace Modules\Post\Entities\PostComment;
 
 use Modules\Base\Entities\BaseEntityModel;
+use Modules\Post\Models\PostCommentModel;
 use Modules\Post\Repositories\PostCommentRepository;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
- * @property $id
- * @property $post_id
- * @property $parent_id
- * @property $content
- * @property $user_id
- * @property $created_at
+ * @property-read PostCommentModel $model
+ * @method self save()
+ * @method static self new()
  * @method static self props($alias = null, $force = null)
  * @method PostCommentRepository repository()
  */
 class PostCommentEntityModel extends BaseEntityModel
 {
+    use PostCommentProps;
+
     protected function repositoryClass(): string
     {
         return PostCommentRepository::class;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public static function dbTable($alias = null)
-    {
-        return self::setTable('social_post_comments', $alias);
-    }
 }
-

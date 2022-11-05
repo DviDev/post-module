@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Post\Entities\PostComment\PostCommentEntityModel;
+use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 
-class CreatePostComments extends Migration
+class CreatePostVotes extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,14 @@ class CreatePostComments extends Migration
      */
     public function up()
     {
-        Schema::create('post_comments', function (Blueprint $table) {
+        Schema::create('post_votes', function (Blueprint $table) {
             $table->id();
 
-            $prop = PostCommentEntityModel::props(null, true);
-            $table->bigInteger($prop->post_id)->unsigned();
-            $table->bigInteger($prop->parent_id)->unsigned()->nullable();
-            $table->text($prop->content);
+            $prop = PostVoteEntityModel::props(null, true);
             $table->bigInteger($prop->user_id)->unsigned();
+            $table->bigInteger($prop->post_id)->unsigned();
+            $table->boolean($prop->up_vote);
+            $table->boolean($prop->down_vote);
             $table->timestamp($prop->created_at)->useCurrent();
         });
     }
@@ -33,6 +33,6 @@ class CreatePostComments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_comments');
+        Schema::dropIfExists('post_votes');
     }
 }
