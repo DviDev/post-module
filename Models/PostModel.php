@@ -3,6 +3,7 @@
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Base\Models\BaseModel;
 use Modules\Post\Database\Factories\PostFactory;
 use Modules\Post\Entities\Post\PostEntityModel;
@@ -18,6 +19,7 @@ class PostModel extends BaseModel
 {
     use HasFactory;
     use PostProps;
+    use SoftDeletes;
 
     public function modelEntity(): string
     {

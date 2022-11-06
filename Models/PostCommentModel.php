@@ -3,6 +3,7 @@
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Base\Models\BaseModel;
 use Modules\Post\Database\Factories\PostCommentFactory;
 use Modules\Post\Entities\PostComment\PostCommentEntityModel;
@@ -18,6 +19,7 @@ class PostCommentModel extends BaseModel
 {
     use HasFactory;
     use PostCommentProps;
+    use SoftDeletes;
 
     public function modelEntity(): string
     {

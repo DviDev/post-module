@@ -10,6 +10,8 @@ namespace Modules\Post\Entities\Post;
  * @property $thumbnail_image_path
  * @property $poll_id
  * @property $created_at
+ * @property $updated_at
+ * @property $deleted_at
  */
 trait PostProps
 {

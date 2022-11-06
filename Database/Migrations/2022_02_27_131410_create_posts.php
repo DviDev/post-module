@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Post\Entities\Post\PostEntityModel;
 
-class CreatePosts extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -23,7 +23,9 @@ class CreatePosts extends Migration
             $table->text($prop->content);
             $table->string($prop->thumbnail_image_path)->nullable();
             $table->bigInteger($prop->poll_id)->unsigned()->nullable();
-            $table->timestamp($prop->created_at)->useCurrent();
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,4 +38,4 @@ class CreatePosts extends Migration
     {
         Schema::dropIfExists('posts');
     }
-}
+};

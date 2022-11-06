@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Post\Entities\PostTag\PostTagEntityModel;
 
-class CreatePostTags extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -32,4 +32,4 @@ class CreatePostTags extends Migration
     {
         Schema::dropIfExists('post_tags');
     }
-}
+};

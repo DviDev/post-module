@@ -9,6 +9,8 @@ namespace Modules\Post\Entities\PostComment;
  * @property $content
  * @property $user_id
  * @property $created_at
+ * @property $updated_at
+ * @property $deleted_at
  */
 trait PostCommentProps
 {

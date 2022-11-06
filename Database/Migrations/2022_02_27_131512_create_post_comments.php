@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Post\Entities\PostComment\PostCommentEntityModel;
 
-class CreatePostComments extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -22,7 +22,9 @@ class CreatePostComments extends Migration
             $table->bigInteger($prop->parent_id)->unsigned()->nullable();
             $table->text($prop->content);
             $table->bigInteger($prop->user_id)->unsigned();
-            $table->timestamp($prop->created_at)->useCurrent();
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -35,4 +37,4 @@ class CreatePostComments extends Migration
     {
         Schema::dropIfExists('post_comments');
     }
-}
+};

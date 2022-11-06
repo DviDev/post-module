@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Post\Entities\PostCommentVote\PostCommentVoteEntityModel;
 
-class CreatePostCommentVotes extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -35,4 +35,4 @@ class CreatePostCommentVotes extends Migration
     {
         Schema::dropIfExists('post_comment_votes');
     }
-}
+};
