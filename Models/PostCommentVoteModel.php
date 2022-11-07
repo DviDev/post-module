@@ -12,7 +12,7 @@ use Modules\Post\Entities\PostCommentVote\PostCommentVoteProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method PostCommentVoteEntityModel toEntity()
- * @method PostCommentVoteFactory factory()
+ * @method static PostCommentVoteFactory factory()
  */
 class PostCommentVoteModel extends BaseModel
 {

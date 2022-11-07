@@ -28,7 +28,8 @@ class PostTagFactory extends Factory
     {
         $p = PostTagEntityModel::props(null, true);
         return [
-
+            $p->post_id => null,
+            $p->tag => $this->faker->word(),
         ];
     }
 }

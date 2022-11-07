@@ -13,7 +13,7 @@ use Modules\Post\Entities\Post\PostProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method PostEntityModel toEntity()
- * @method PostFactory factory()
+ * @method static PostFactory factory()
  */
 class PostModel extends BaseModel
 {

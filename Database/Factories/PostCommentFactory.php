@@ -28,7 +28,10 @@ class PostCommentFactory extends Factory
     {
         $p = PostCommentEntityModel::props(null, true);
         return [
-
+            $p->post_id = null,
+            $p->parent_id = null,
+            $p->content = $this->faker->sentence(),
+            $p->user_id = null,
         ];
     }
 }

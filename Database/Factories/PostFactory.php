@@ -28,7 +28,11 @@ class PostFactory extends Factory
     {
         $p = PostEntityModel::props(null, true);
         return [
-
+            $p->user_id => null,
+            $p->title => $this->faker->sentence(),
+            $p->content => $this->faker->sentence(),
+            $p->thumbnail_image_path => null,
+            $p->poll_id => null,
         ];
     }
 }

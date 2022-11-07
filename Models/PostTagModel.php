@@ -12,7 +12,7 @@ use Modules\Post\Entities\PostTag\PostTagProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method PostTagEntityModel toEntity()
- * @method PostTagFactory factory()
+ * @method static PostTagFactory factory()
  */
 class PostTagModel extends BaseModel
 {

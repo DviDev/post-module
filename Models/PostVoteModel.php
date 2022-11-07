@@ -12,7 +12,7 @@ use Modules\Post\Entities\PostVote\PostVoteProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method PostVoteEntityModel toEntity()
- * @method PostVoteFactory factory()
+ * @method static PostVoteFactory factory()
  */
 class PostVoteModel extends BaseModel
 {

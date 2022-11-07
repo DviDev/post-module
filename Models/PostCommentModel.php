@@ -13,7 +13,7 @@ use Modules\Post\Entities\PostComment\PostCommentProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method PostCommentEntityModel toEntity()
- * @method PostCommentFactory factory()
+ * @method static PostCommentFactory factory()
  */
 class PostCommentModel extends BaseModel
 {

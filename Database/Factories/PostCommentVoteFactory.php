@@ -28,7 +28,10 @@ class PostCommentVoteFactory extends Factory
     {
         $p = PostCommentVoteEntityModel::props(null, true);
         return [
-
+            $p->user_id => null,
+            $p->comment_id => null,
+            $p->up_vote => $this->faker->randomDigit(),
+            $p->down_vote => $this->faker->randomDigit(),
         ];
     }
 }
