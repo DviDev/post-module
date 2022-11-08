@@ -20,8 +20,8 @@ return new class extends Migration
             $prop = PostVoteEntityModel::props(null, true);
             $table->bigInteger($prop->user_id)->unsigned();
             $table->bigInteger($prop->post_id)->unsigned();
-            $table->boolean($prop->up_vote);
-            $table->boolean($prop->down_vote);
+            $table->boolean($prop->up_vote)->nullable();
+            $table->boolean($prop->down_vote)->nullable();
 
             $table->timestamps();
         });

@@ -28,10 +28,10 @@ class PostVoteFactory extends Factory
     {
         $p = PostVoteEntityModel::props(null, true);
         return [
-            $p->user_id = null,
-            $p->post_id = null,
-            $p->up_vote = $this->faker->randomDigit(),
-            $p->down_vote = $this->faker->randomDigit(),
+            $p->user_id => null,
+            $p->post_id => null,
+            $p->up_vote => null,
+            $p->down_vote => null,
         ];
     }
 }
