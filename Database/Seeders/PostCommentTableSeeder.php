@@ -31,14 +31,15 @@ class PostCommentTableSeeder extends Seeder
     {
         Model::unguard();
 
-        PostTagModel::factory()->for($post, 'post')->count(11)->create();
+        PostTagModel::factory()->for($post, 'post')->count(config('app.MODULE_SEED_CATEGORY_COUNT'))->create();
         $comment = PostCommentEntityModel::props();
-        PostCommentModel::factory()->count(11)
+        PostCommentModel::factory()->count(config('app.MODULE_SEED_COUNT'))
             ->for($post, 'post')
+            ->for($user, 'user')
             ->sequence(
                 [$comment->parent_id => null],
                 [$comment->parent_id => PostCommentModel::query()->inRandomOrder()->first()->id ?? null])
-            ->create([$comment->user_id => $post->user_id])
+            ->create()
             ->each(function (PostCommentModel $comment) use ($user) {
                 $p = PostCommentVoteEntityModel::props();
                 $fnUpVote = fn(Factory $factory) => $factory->create([$p->up_vote => 1]);

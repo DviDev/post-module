@@ -2,6 +2,7 @@
 
 namespace Modules\Post\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,6 +15,7 @@ use Modules\Post\Entities\PostComment\PostCommentProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @property-read PostModel $post
+ * @property-read User $user
  * @method PostCommentEntityModel toEntity()
  * @method static PostCommentFactory factory()
  */
@@ -41,5 +43,10 @@ class PostCommentModel extends BaseModel
     public function post(): BelongsTo
     {
         return $this->belongsTo(PostModel::class, 'post_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
