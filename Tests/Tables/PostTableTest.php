@@ -19,37 +19,37 @@ class PostTableTest extends BaseTest
 
     public function testTableMustExist()
     {
-        parent::testTableMustExist();
+        parent::tableMustExist();
     }
 
     public function testTableHasExpectedColumns()
     {
-        parent::testTableHasExpectedColumns();
+        parent::tableHasExpectedColumns();
     }
 
     public function testCanCreateInstanceOfEntity()
     {
-        parent::testCanCreateInstanceOfEntity();
+        parent::canCreateInstanceOfEntity();
     }
 
     public function testCanCreateInstanceOfModel()
     {
-        parent::testCanCreateInstanceOfModel();
+        parent::canCreateInstanceOfModel();
     }
 
     public function testShouldSave($attributes = null)
     {
-        parent::testShouldSave($attributes);
+        parent::shouldSave($attributes);
     }
 
     public function testShouldUpdate($attributes = null)
     {
-        parent::testShouldUpdate($attributes);
+        parent::shouldUpdate($attributes);
     }
 
     public function testShouldDelete()
     {
-        parent::testShouldDelete();
+        parent::shouldDelete();
     }
 
     protected function create(): PostModel
