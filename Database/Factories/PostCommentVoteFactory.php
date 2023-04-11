@@ -3,6 +3,7 @@
 namespace Modules\Post\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Post\Entities\PostCommentVote\PostCommentVoteEntityModel;
 use Modules\Post\Models\PostCommentVoteModel;
 
@@ -10,7 +11,7 @@ use Modules\Post\Models\PostCommentVoteModel;
  * @method PostCommentVoteModel create(array $attributes = [])
  * @method PostCommentVoteModel make(array $attributes = [])
  */
-class PostCommentVoteFactory extends Factory
+class PostCommentVoteFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -26,12 +27,6 @@ class PostCommentVoteFactory extends Factory
      */
     public function definition(): array
     {
-        $p = PostCommentVoteEntityModel::props(null, true);
-        return [
-            $p->user_id => null,
-            $p->comment_id => null,
-            $p->up_vote => null,
-            $p->down_vote => null,
-        ];
+        return $this->getValues();
     }
 }
