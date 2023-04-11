@@ -2,15 +2,14 @@
 
 namespace Modules\Post\Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Post\Entities\Post\PostEntityModel;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Post\Models\PostModel;
 
 /**
  * @method PostModel create(array $attributes = [])
  * @method PostModel make(array $attributes = [])
  */
-class PostFactory extends Factory
+class PostFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -26,9 +25,6 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $p = PostEntityModel::props(null, true);
-        return [
-
-        ];
+        return $this->getValues();
     }
 }
