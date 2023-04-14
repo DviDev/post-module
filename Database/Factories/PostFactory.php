@@ -29,4 +29,6 @@ class PostFactory extends BaseFactory
     {
         return $this->getValues();
     }
+
+
 }

@@ -27,6 +27,10 @@ class PostCommentVoteFactory extends BaseFactory
      */
     public function definition(): array
     {
-        return $this->getValues();
+        $p = PostCommentVoteEntityModel::props();
+        $values = $this->getValues();
+        $values[$p->up_vote] = $values[$p->up_vote] ?: null;
+        $values[$p->down_vote] = $values[$p->down_vote] ?: null;
+        return $values;
     }
 }
