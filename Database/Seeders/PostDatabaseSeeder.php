@@ -22,7 +22,7 @@ class PostDatabaseSeeder extends Seeder
 
         $me = User::find(1);
         $me->workspaces()->each(function (WorkspaceModel $workspace) {
-            PostModel::factory()->count(config('app.POST_SEED_COUNT'))
+            PostModel::factory()->count(config('app.SEED_POST_COUNT'))
                 ->for($workspace->user, 'user')->create();
 
             $posts = PostModel::where('user_id', $workspace->user_id);
@@ -73,7 +73,7 @@ class PostDatabaseSeeder extends Seeder
 
     function createPostTags(PostModel $post): void
     {
-        PostTagModel::factory()->for($post, 'post')->count(config('app.MODULE_SEED_CATEGORY_COUNT'))->create();
+        PostTagModel::factory()->for($post, 'post')->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create();
 
         $tags = $post->tags();
         $total_seed = $tags->count();

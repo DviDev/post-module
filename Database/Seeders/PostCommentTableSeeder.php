@@ -34,7 +34,7 @@ class PostCommentTableSeeder extends Seeder
 
         $comment = PostCommentEntityModel::props();
         PostCommentModel::factory()
-//            ->count(config('app.COMMENTS_SEED_COUNT'))
+//            ->count(config('app.SEED_COMMENTS_COUNT'))
             ->for($post, 'post')
             ->for($user, 'user')
             ->sequence(
