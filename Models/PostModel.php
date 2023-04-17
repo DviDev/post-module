@@ -52,8 +52,13 @@ class PostModel extends BaseModel
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(PostCommentModel::class, 'post_id');
+    }
+
+    public function votes(): HasMany
+    {
+        return $this->hasMany(PostVoteModel::class, 'post_id');
     }
 }
