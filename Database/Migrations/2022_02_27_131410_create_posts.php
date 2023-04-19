@@ -18,7 +18,9 @@ return new class extends Migration
             $table->id();
 
             $prop = PostEntityModel::props(null, true);
-            $table->bigInteger($prop->user_id)->unsigned();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->title);
             $table->text($prop->content);
             $table->string($prop->thumbnail_image_path)->nullable();

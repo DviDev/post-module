@@ -18,10 +18,18 @@ return new class extends Migration
             $table->id();
 
             $prop = PostCommentEntityModel::props(null, true);
-            $table->bigInteger($prop->post_id)->unsigned();
-            $table->bigInteger($prop->parent_id)->unsigned()->nullable();
+            $table->foreignId($prop->post_id)
+                ->references('id')->on('posts')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->parent_id)
+                ->nullable()
+                ->references('id')->on('post_comments')
+                ->cascadeOnUpdate()->nullOnDelete();
+
             $table->text($prop->content);
-            $table->bigInteger($prop->user_id)->unsigned();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->timestamps();
             $table->softDeletes();

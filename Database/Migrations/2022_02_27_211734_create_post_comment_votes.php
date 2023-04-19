@@ -18,8 +18,12 @@ return new class extends Migration
             $table->id();
 
             $prop = PostCommentVoteEntityModel::props(null, true);
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->comment_id)->unsigned();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->comment_id)
+                ->references('id')->on('post_comments')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->boolean($prop->up_vote)->nullable();
             $table->boolean($prop->down_vote)->nullable();
             $table->timestamp($prop->created_at)->useCurrent();

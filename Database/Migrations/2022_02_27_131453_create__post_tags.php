@@ -18,7 +18,9 @@ return new class extends Migration
             $table->id();
 
             $prop = PostTagEntityModel::props(null, true);
-            $table->bigInteger($prop->post_id)->unsigned();
+            $table->foreignId($prop->post_id)
+                ->references('id')->on('posts')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->tag, 50);
         });
     }
