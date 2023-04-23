@@ -1,16 +1,11 @@
 <div class="dark:text-gray-200 text-gray-800 px-4 space-y-1">
-    <div class="space-x-1">
-        <x-button href="{{route('admin.workspace.projects', $row->id)}}" label="projetos" teal/>
-
-        <x-button href="{{route('admin.workspace.posts', $row->id)}}" label="posts" teal/>
-
-        <x-button href="{{route('admin.workspace.links', $row->id)}}" label="links" teal/>
-
-        <x-button href="{{route('admin.workspace.participants', $row->id)}}" label="participants" teal/>
-
-        <x-button href="{{route('admin.workspace.chats', $row->id)}}" label="chats" teal/>
-
-        <x-button href="{{route('admin.workspace.tags', $row->id)}}" label="tags" teal/>
-    </div>
+    <x-dvui::button.group class="text-sm border dark:border-gray-500 dark:text-gray-400 divide-x divide-gray-500">
+        <x-dvui::link text="projetos" url="{{route('admin.workspace.projects', $row->id)}}" teal class="px-2 py-1 rounded-l-md"/>
+        <x-dvui::link text="posts" url="{{route('admin.workspace.posts', $row->id)}}" teal class="px-2 py-1"/>
+        <x-dvui::link text="links" url="{{route('admin.workspace.links', $row->id)}}" teal class="px-2 py-1"/>
+        <x-dvui::link text="participants" url="{{route('admin.workspace.participants', $row->id)}}" teal class="px-2 py-1"/>
+        <x-dvui::link text="chats" url="{{route('admin.workspace.chats', $row->id)}}" teal class="px-2 py-1"/>
+        <x-dvui::link text="tags" url="{{route('admin.workspace.tags', $row->id)}}" teal class="px-2 py-1 rounded-r-md"/>
+    </x-dvui::button.group>
     <div>Descrição: {{$row->description}}</div>
 </div>

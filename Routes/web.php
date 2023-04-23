@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 use Modules\Post\Models\PostCommentModel;
 use Modules\Post\Models\PostModel;
 
