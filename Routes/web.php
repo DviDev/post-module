@@ -28,6 +28,6 @@ Route::prefix('post')->group(function () {
     Route::get('/{post}/votes', fn(PostModel $post) => view('post::components.page.votes_page', compact('post')))
         ->name('admin.post.votes');
 
-    Route::get('/form/{post}', fn(PostModel $post) => view('post::components.page.postform', compact($post)))
+    Route::get('/form/{post}', fn(PostModel $post) => view('post::components.page.postform', compact('post')))
         ->name('admin.post.form');
 });
