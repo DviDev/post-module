@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string($prop->title);
             $table->text($prop->content);
             $table->string($prop->thumbnail_image_path)->nullable();
-            $table->bigInteger($prop->poll_id)->unsigned()->nullable();
 
             $table->timestamps();
             $table->softDeletes();
