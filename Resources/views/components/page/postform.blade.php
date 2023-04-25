@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:post.form.post-form :post="$post"/>
+    <livewire:post.form.post-form :model="$post"/>
 </x-app-layout>
