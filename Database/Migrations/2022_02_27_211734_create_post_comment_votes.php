@@ -24,8 +24,8 @@ return new class extends Migration
             $table->foreignId($prop->comment_id)
                 ->references('id')->on('post_comments')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->boolean($prop->up_vote)->nullable();
-            $table->boolean($prop->down_vote)->nullable();
+            $table->boolean($prop->up_vote)->unsigned()->nullable();
+            $table->boolean($prop->down_vote)->unsigned()->nullable();
             $table->timestamp($prop->created_at)->useCurrent();
         });
     }

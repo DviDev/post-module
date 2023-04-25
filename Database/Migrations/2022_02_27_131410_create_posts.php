@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text($prop->content);
             $table->string($prop->thumbnail_image_path)->nullable();
 
+            $table->unique([$prop->user_id, $prop->title]);
+
             $table->timestamps();
             $table->softDeletes();
         });
