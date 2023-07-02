@@ -9,6 +9,8 @@ namespace Modules\Post\Entities\PostCommentVote;
  * @property $up_vote
  * @property $down_vote
  * @property $created_at
+ * @property $updated_at
+ * @property $deleted_at
  */
 trait PostCommentVoteProps
 {

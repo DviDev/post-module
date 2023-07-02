@@ -17,18 +17,20 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
 
-            $prop = PostEntityModel::props(null, true);
-            $table->foreignId($prop->user_id)
+            $p = PostEntityModel::props(null, true);
+            $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->string($prop->title);
-            $table->text($prop->content);
-            $table->string($prop->thumbnail_image_path)->nullable();
+            $table->string($p->title);
+            $table->text($p->content);
+            $table->string($p->thumbnail_image_path)->nullable();
 
-            $table->unique([$prop->user_id, $prop->title]);
+            $table->unique([$p->user_id, $p->title]);
 
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
         });
     }
 

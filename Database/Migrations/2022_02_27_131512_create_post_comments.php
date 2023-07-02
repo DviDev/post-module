@@ -17,22 +17,24 @@ return new class extends Migration
         Schema::create('post_comments', function (Blueprint $table) {
             $table->id();
 
-            $prop = PostCommentEntityModel::props(null, true);
-            $table->foreignId($prop->post_id)
+            $p = PostCommentEntityModel::props(null, true);
+            $table->foreignId($p->post_id)
                 ->references('id')->on('posts')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId($prop->parent_id)
+            $table->foreignId($p->parent_id)
                 ->nullable()
                 ->references('id')->on('post_comments')
                 ->cascadeOnUpdate()->nullOnDelete();
 
-            $table->text($prop->content);
-            $table->foreignId($prop->user_id)
+            $table->text($p->content);
+            $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
 
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
         });
     }
 
