@@ -16,6 +16,8 @@ use Modules\Post\Models\PostCommentModel;
 use Modules\Post\Models\PostModel;
 
 Route::prefix('post')->group(function () {
+    Route::get('/form/{model}', fn(PostModel $model) => view('viewstructure::components.form.dynamicform', compact('model')))
+        ->name('admin.post.edit');
     Route::view('/list', 'post::components.page.postlistpage')->name('admin.posts');
     Route::get('/{post}/comments',
         fn(PostModel $post) => view('post::components.page.postcommentpage', compact('post')))
