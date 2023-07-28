@@ -6,10 +6,15 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Modules\DBMap\Domains\ScanTableDomain;
+use Modules\Link\Models\LinkModel;
+use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
 use Modules\Post\Models\PostVoteModel;
+use Modules\Project\Database\Seeders\ProjectTableSeeder;
+use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
 
@@ -18,6 +23,11 @@ class PostDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
+
+        (new ScanTableDomain())->scan('post');
+
+        $module = ProjectModuleModel::query()->where('name', 'Post')->first();
+        $project = $module->project;
 
         $me = User::find(1);
         $me->workspaces()->each(function (WorkspaceModel $workspace) {
@@ -40,6 +50,13 @@ class PostDatabaseSeeder extends Seeder
                 $this->createPostComments($post, $workspace);
             });
         });
+
+        $project->posts()->attach(PostModel::query()->get()->modelKeys());
+
+        $this->call(class: PermissionTableSeeder::class, parameters: ['module' => $module]);
+
+        $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
+
     }
 
     function postVotes(PostModel $post, WorkspaceModel $workspace): void
