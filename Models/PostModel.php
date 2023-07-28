@@ -5,9 +5,13 @@ namespace Modules\Post\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Base\Entities\BaseEntityModel;
 use Modules\Base\Models\BaseModel;
+use Modules\Base\Models\EntityItemModel;
+use Modules\Base\Models\EntityItemRelationModel;
 use Modules\Post\Database\Factories\PostFactory;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Entities\Post\PostProps;
@@ -18,7 +22,7 @@ use Modules\Post\Entities\Post\PostProps;
  * @property-read PostTagModel[] $tags
  * @property-read User $user
  * @method PostEntityModel toEntity()
- * @method static PostFactory factory()
+ * @method static PostFactory factory($count = null, $state = [])
  */
 class PostModel extends BaseModel
 {
@@ -59,5 +63,10 @@ class PostModel extends BaseModel
     public function votes(): HasMany
     {
         return $this->hasMany(PostVoteModel::class, 'post_id');
+    }
+
+    public function entityItem(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(PostCommentModel::class, EntityItemRelationModel::class, 'item1', 'entity_item_id', 'entity_item_id', 'item2');
     }
 }

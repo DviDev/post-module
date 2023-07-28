@@ -16,9 +16,10 @@ return new class extends Migration
     {
         Schema::create('post_comments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('entity_item_id')->nullable();
 
             $p = PostCommentEntityModel::props(null, true);
-            $table->foreignId($p->post_id)
+            $table->foreignId($p->post_id)->nullable()
                 ->references('id')->on('posts')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignId($p->parent_id)
