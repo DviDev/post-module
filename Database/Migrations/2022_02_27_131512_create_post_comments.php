@@ -15,13 +15,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('post_comments', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('entity_item_id')->nullable();
-
             $p = PostCommentEntityModel::props(null, true);
-            $table->foreignId($p->post_id)->nullable()
-                ->references('id')->on('posts')
-                ->cascadeOnUpdate()->restrictOnDelete();
+
+            $table->id();
+
+            $table->unsignedBigInteger($p->entity_item_id);
+
+//            $table->foreignId($p->post_id)->nullable()
+//                ->references('id')->on('posts')
+//                ->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignId($p->parent_id)
                 ->nullable()
                 ->references('id')->on('post_comments')

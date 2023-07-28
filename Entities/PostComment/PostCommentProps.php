@@ -4,6 +4,7 @@ namespace Modules\Post\Entities\PostComment;
 
 /**
  * @property $id
+ * @property $entity_item_id
  * @property $post_id
  * @property $parent_id
  * @property $content

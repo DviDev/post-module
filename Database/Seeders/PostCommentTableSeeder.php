@@ -32,25 +32,21 @@ class PostCommentTableSeeder extends Seeder
     {
         Model::unguard();
 
-        $comment = PostCommentEntityModel::props();
-        PostCommentModel::factory()
-//            ->count(config('app.SEED_COMMENTS_COUNT'))
-            ->for($post, 'post')
-            ->for($user, 'user')
-            ->sequence(
-                [$comment->parent_id => null],
-                [$comment->parent_id => PostCommentModel::query()->inRandomOrder()->first()->id ?? null])
-            ->create();
-
+        $p = PostCommentEntityModel::props();
+        $post->addComment(
+            PostCommentModel::factory()
+                ->for($user)
+                ->sequence(
+                    [$p->parent_id => null],
+                    [$p->parent_id => PostCommentModel::query()->inRandomOrder()->first()->id ?? null])
+                ->make(['entity_item_id' => $post->entity_item_id])
+        );
         $this->commentVotes($post, $user, $workspace);
     }
 
     protected function commentVotes(PostModel $post, User $user, WorkspaceModel $workspace): void
     {
-        $comments = $post->comments();
-        $seed_total = $comments->count();
-        $seeded = 0;
-        $comments->each(function (PostCommentModel $comment) use ($user, $workspace, $seed_total, &$seeded) {
+        $post->comments->each(function (PostCommentModel $comment) use ($user, $workspace) {
             $p = PostCommentVoteEntityModel::props();
             $fnUpVote = fn(Factory $factory) => $factory->create([$p->up_vote => 1]);
             $fnDownVote = fn(Factory $factory) => $factory->create([$p->down_vote => 1]);
@@ -58,12 +54,9 @@ class PostCommentTableSeeder extends Seeder
             /**@var \Closure $choice */
             $choice = collect([$fnUpVote, $fnDownVote])->random();
             $factory = PostCommentVoteModel::factory()->for($comment, 'comment')->for($user, 'user');
-            /**@var PostCommentVoteModel $vote */
-            $vote = $choice($factory);
 
-            $seeded++;
-            ds("workspace $workspace->id post $comment->post_id user $user->id comment $comment->id " .
-                ($vote->up_vote ? 'up-voted' : 'down-voted'). " $seeded / $seed_total");
+            /**@var PostCommentVoteModel $vote */
+            $choice($factory);
         });
     }
 }

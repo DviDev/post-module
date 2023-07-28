@@ -34,7 +34,7 @@ class PostDatabaseSeeder extends Seeder
             PostModel::factory()->count(config('app.SEED_POST_COUNT'))
                 ->for($workspace->user, 'user')->create();
 
-            $posts = PostModel::where('user_id', $workspace->user_id);
+            $posts = PostModel::where('user_id', $workspace->user_id)->with('comments');
             $seed_total = $posts->count();
             $seeded = 0;
             $posts->each(function (PostModel $post) use ($workspace, $seed_total, &$seeded) {

@@ -4,6 +4,7 @@ namespace Modules\Post\Entities\Post;
 
 /**
  * @property $id
+ * @property $entity_item_id
  * @property $user_id
  * @property $title
  * @property $content

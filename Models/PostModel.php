@@ -12,6 +12,7 @@ use Modules\Base\Entities\BaseEntityModel;
 use Modules\Base\Models\BaseModel;
 use Modules\Base\Models\EntityItemModel;
 use Modules\Base\Models\EntityItemRelationModel;
+use Modules\Base\Services\Comments\HasComments;
 use Modules\Post\Database\Factories\PostFactory;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Entities\Post\PostProps;
@@ -21,6 +22,7 @@ use Modules\Post\Entities\Post\PostProps;
  * @link https://github.com/DaviMenezes
  * @property-read PostTagModel[] $tags
  * @property-read User $user
+ * @property-read EntityItemModel $entity
  * @method PostEntityModel toEntity()
  * @method static PostFactory factory($count = null, $state = [])
  */
@@ -29,7 +31,7 @@ class PostModel extends BaseModel
     use HasFactory;
     use PostProps;
     use SoftDeletes;
-
+    use HasComments;
     public function modelEntity(): string
     {
         return PostEntityModel::class;
@@ -57,7 +59,7 @@ class PostModel extends BaseModel
 
     public function comments(): HasMany
     {
-        return $this->hasMany(PostCommentModel::class, 'post_id');
+        return $this->hasMany(PostCommentModel::class, 'entity_item_id', 'entity_item_id');
     }
 
     public function votes(): HasMany
@@ -65,8 +67,14 @@ class PostModel extends BaseModel
         return $this->hasMany(PostVoteModel::class, 'post_id');
     }
 
-    public function entityItem(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    public function entity(): BelongsTo
     {
-        return $this->hasManyThrough(PostCommentModel::class, EntityItemRelationModel::class, 'item1', 'entity_item_id', 'entity_item_id', 'item2');
+        return $this->belongsTo(EntityItemModel::class, 'entity_item_id');
+    }
+
+    public function save(array $options = []): bool
+    {
+        $this->entity_item_id = $this->entity_item_id ?: EntityItemModel::create()->id;
+        return parent::save($options);
     }
 }

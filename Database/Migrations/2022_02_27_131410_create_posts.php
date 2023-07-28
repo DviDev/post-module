@@ -16,9 +16,10 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('entity_item_id')->nullable();
-
             $p = PostEntityModel::props(null, true);
+
+            $table->unsignedBigInteger($p->entity_item_id)->nullable();
+
             $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
