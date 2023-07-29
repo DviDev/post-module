@@ -106,8 +106,12 @@ class PostDatabaseSeeder extends Seeder
     {
         $participants = $workspace->participants();
 
-        $participants->each(function (User $user) use ($post, $workspace) {
-            $this->call(MessageTableSeeder::class, false, compact('post', 'user', 'workspace'));
+        $entity = EntityItemModel::factory()->create();
+        $post->entity_item_id = $entity->id;
+        $post->save();
+
+        $participants->each(function (User $user) use ($post, $workspace, $entity) {
+            $this->call(MessageTableSeeder::class, parameters: compact('entity', 'user'));
         });
     }
 }
