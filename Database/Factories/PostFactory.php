@@ -15,7 +15,7 @@ class PostFactory extends BaseFactory
 
     public function definition(): array
     {
-        $p = PostEntityModel::props();
+        //$p = PostEntityModel::props();
         return $this->getValues();
     }
 }

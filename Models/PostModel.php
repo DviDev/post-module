@@ -5,13 +5,13 @@ namespace Modules\Post\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Base\Entities\BaseEntityModel;
 use Modules\Base\Models\BaseModel;
-use Modules\Base\Models\EntityItemModel;
-use Modules\Base\Models\EntityItemRelationModel;
+use Modules\App\Models\CommentModel;
+use Modules\App\Models\EntityItemModel;
+use Modules\App\Models\EntityRelationModel;
 use Modules\Base\Services\Comments\HasComments;
 use Modules\Post\Database\Factories\PostFactory;
 use Modules\Post\Entities\Post\PostEntityModel;
@@ -32,6 +32,7 @@ class PostModel extends BaseModel
     use PostProps;
     use SoftDeletes;
     use HasComments;
+
     public function modelEntity(): string
     {
         return PostEntityModel::class;
@@ -59,7 +60,8 @@ class PostModel extends BaseModel
 
     public function comments(): HasMany
     {
-        return $this->hasMany(PostCommentModel::class, 'entity_item_id', 'entity_item_id');
+        return $this->hasMany(CommentModel::class, 'entity_item_id', 'entity_item_id');
+//        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'entity_item_id', 'entity_item_id', 'item2');
     }
 
     public function votes(): HasMany
@@ -72,9 +74,4 @@ class PostModel extends BaseModel
         return $this->belongsTo(EntityItemModel::class, 'entity_item_id');
     }
 
-    public function save(array $options = []): bool
-    {
-        $this->entity_item_id = $this->entity_item_id ?: EntityItemModel::create()->id;
-        return parent::save($options);
-    }
 }

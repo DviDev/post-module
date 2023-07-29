@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Modules\App\Models\EntityItemModel;
+use Modules\Base\Database\Seeders\CommentTableSeeder;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Link\Models\LinkModel;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
@@ -30,11 +32,14 @@ class PostDatabaseSeeder extends Seeder
         $project = $module->project;
 
         $me = User::find(1);
-        $me->workspaces()->each(function (WorkspaceModel $workspace) {
-            PostModel::factory()->count(config('app.SEED_POST_COUNT'))
-                ->for($workspace->user, 'user')->create();
+        foreach ($me->workspaces as $workspace) {
+            $post = PostModel::factory()->for($workspace->user)->create([
+                'entity_item_id' => EntityItemModel::factory()->create()->id
+            ]);
+            $this->command->warn('saving post ' . $post->id . ' ' . $post->entity_item_id);
 
             $posts = PostModel::where('user_id', $workspace->user_id)->with('comments');
+
             $seed_total = $posts->count();
             $seeded = 0;
             $posts->each(function (PostModel $post) use ($workspace, $seed_total, &$seeded) {
@@ -49,7 +54,7 @@ class PostDatabaseSeeder extends Seeder
 
                 $this->createPostComments($post, $workspace);
             });
-        });
+        }
 
         $project->posts()->attach(PostModel::query()->get()->modelKeys());
 
@@ -57,6 +62,22 @@ class PostDatabaseSeeder extends Seeder
 
         $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
 
+    }
+
+    function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
+    {
+        WorkspacePostModel::factory()->for($workspace, 'workspace')->for($post, 'post')->create();
+        ds("workspace $workspace->id post $post->id");
+    }
+
+    function createPostTags(PostModel $post): void
+    {
+        PostTagModel::factory()->for($post, 'post')->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create();
+
+        $tags = $post->tags();
+        $total_seed = $tags->count();
+        $seeded = 0;
+        $tags->each(fn(PostTagModel $tag) => ds("post $tag->post_id tag $seeded / $total_seed"));
     }
 
     function postVotes(PostModel $post, WorkspaceModel $workspace): void
@@ -81,28 +102,12 @@ class PostDatabaseSeeder extends Seeder
         });
     }
 
-    function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
-    {
-        WorkspacePostModel::factory()->for($workspace, 'workspace')->for($post, 'post')->create();
-        ds("workspace $workspace->id post $post->id");
-    }
-
-    function createPostTags(PostModel $post): void
-    {
-        PostTagModel::factory()->for($post, 'post')->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create();
-
-        $tags = $post->tags();
-        $total_seed = $tags->count();
-        $seeded = 0;
-        $tags->each(fn(PostTagModel $tag) => ds("post $tag->post_id tag $seeded / $total_seed"));
-    }
-
     function createPostComments(PostModel $post, WorkspaceModel $workspace): void
     {
         $participants = $workspace->participants();
 
         $participants->each(function (User $user) use ($post, $workspace) {
-            $this->call(PostCommentTableSeeder::class, false, compact('post', 'user', 'workspace'));
+            $this->call(CommentTableSeeder::class, false, compact('post', 'user', 'workspace'));
         });
     }
 }

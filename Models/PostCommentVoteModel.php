@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Base\Models\BaseModel;
+use Modules\App\Models\CommentModel;
 use Modules\Post\Database\Factories\PostCommentVoteFactory;
 use Modules\Post\Entities\PostCommentVote\PostCommentVoteEntityModel;
 use Modules\Post\Entities\PostCommentVote\PostCommentVoteProps;
@@ -13,7 +14,7 @@ use Modules\Post\Entities\PostCommentVote\PostCommentVoteProps;
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
- * @property-read PostCommentModel $comment
+ * @property-read CommentModel $comment
  * @property-read User $user
  * @method PostCommentVoteEntityModel toEntity()
  * @method static PostCommentVoteFactory factory()
@@ -40,7 +41,7 @@ class PostCommentVoteModel extends BaseModel
 
     public function comment(): BelongsTo
     {
-        return $this->belongsTo(PostCommentModel::class, 'comment_id');
+        return $this->belongsTo(CommentModel::class, 'comment_id');
     }
 
     public function user(): BelongsTo

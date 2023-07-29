@@ -1,20 +1,20 @@
 <?php
 
 use Modules\Base\Services\Tests\BaseTest;
-use Modules\Post\Entities\PostComment\PostCommentEntityModel;
-use Modules\Post\Models\PostCommentModel;
+use Modules\App\Entities\Comment\CommentEntityModel;
+use Modules\App\Models\CommentModel;
 
 class PostCommentTableTest extends BaseTest
 {
 
-    public function getEntityClass(): string|PostCommentEntityModel
+    public function getEntityClass(): string|CommentEntityModel
     {
-        return PostCommentEntityModel::class;
+        return CommentEntityModel::class;
     }
 
-    public function getModelClass(): string|PostCommentModel
+    public function getModelClass(): string|CommentModel
     {
-        return PostCommentModel::class;
+        return CommentModel::class;
     }
 
     public function testTableMustExist()
@@ -52,7 +52,7 @@ class PostCommentTableTest extends BaseTest
         parent::shouldDelete();
     }
 
-    protected function create(): PostCommentModel
+    protected function create(): CommentModel
     {
         return $this->getModelClass()::factory()->create();
     }
