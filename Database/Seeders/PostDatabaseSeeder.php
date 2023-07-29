@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\App\Models\EntityItemModel;
-use Modules\Base\Database\Seeders\CommentTableSeeder;
+use Modules\App\Database\Seeders\MessageTableSeeder;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Link\Models\LinkModel;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
@@ -107,7 +107,7 @@ class PostDatabaseSeeder extends Seeder
         $participants = $workspace->participants();
 
         $participants->each(function (User $user) use ($post, $workspace) {
-            $this->call(CommentTableSeeder::class, false, compact('post', 'user', 'workspace'));
+            $this->call(MessageTableSeeder::class, false, compact('post', 'user', 'workspace'));
         });
     }
 }

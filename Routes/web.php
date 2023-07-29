@@ -12,7 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Route;
-use Modules\App\Models\CommentModel;
+use Modules\App\Models\MessageModel;
 use Modules\Post\Models\PostModel;
 
 Route::prefix('post')->group(function () {
@@ -23,7 +23,7 @@ Route::prefix('post')->group(function () {
         fn(PostModel $post) => view('post::components.page.postcommentpage', compact('post')))
             ->name('admin.post.comments');
     Route::get('/comment/{comment}/votes',
-        fn(CommentModel $comment) => view('post::components.page.comment_votes_page', compact('comment')))
+        fn(MessageModel $comment) => view('post::components.page.comment_votes_page', compact('comment')))
             ->name('admin.post.comment.votes');
     Route::get('/{post}/tags', fn(PostModel $post) => view('post::components.page.tags_page', compact('post')))
         ->name('admin.post.tags');

@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Base\Models\BaseModel;
-use Modules\App\Models\CommentModel;
+use Modules\App\Models\MessageModel;
 use Modules\App\Models\EntityItemModel;
 use Modules\App\Models\EntityRelationModel;
-use Modules\Base\Services\Comments\HasComments;
+use Modules\App\Services\Message\HasMessage;
 use Modules\Post\Database\Factories\PostFactory;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Entities\Post\PostProps;
@@ -31,7 +31,7 @@ class PostModel extends BaseModel
     use HasFactory;
     use PostProps;
     use SoftDeletes;
-    use HasComments;
+    use HasMessage;
 
     public function modelEntity(): string
     {
@@ -60,7 +60,7 @@ class PostModel extends BaseModel
 
     public function comments(): HasMany
     {
-        return $this->hasMany(CommentModel::class, 'entity_item_id', 'entity_item_id');
+        return $this->hasMany(MessageModel::class, 'entity_item_id', 'entity_item_id');
 //        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'entity_item_id', 'entity_item_id', 'item2');
     }
 

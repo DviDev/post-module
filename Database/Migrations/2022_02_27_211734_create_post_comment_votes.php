@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Post\Entities\PostCommentVote\PostCommentVoteEntityModel;
+use Modules\App\Entities\MessageVote\MessageVoteEntityModel;
 
 return new class extends Migration
 {
@@ -17,10 +17,10 @@ return new class extends Migration
         Schema::create('post_comment_votes', function (Blueprint $table) {
             $table->id();
 
-            $p = PostCommentVoteEntityModel::props(null, true);
+            $p = MessageVoteEntityModel::props(null, true);
             $table->foreignId($p->user_id)->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId($p->comment_id)->references('id')->on('app_comments')
+            $table->foreignId($p->comment_id)->references('id')->on('app_messages')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->boolean($p->up_vote)->unsigned()->nullable();
             $table->boolean($p->down_vote)->unsigned()->nullable();

@@ -4,7 +4,7 @@ namespace Modules\Post\Http\Livewire;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Modules\App\Models\CommentModel;
+use Modules\App\Models\MessageModel;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Footer;
@@ -18,7 +18,7 @@ final class PostCommentVoteTable extends PowerGridComponent
 {
     use ActionButton;
 
-    public CommentModel $comment;
+    public MessageModel $comment;
 
     /*
     |--------------------------------------------------------------------------
