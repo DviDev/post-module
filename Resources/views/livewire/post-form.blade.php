@@ -1,6 +1,6 @@
 @php
-    use Modules\ViewStructure\Models\ElementModel;
-    use Modules\ViewStructure\Models\ElementPropertyModel;
+    use Modules\View\Models\ElementModel;
+    use Modules\View\Models\ElementPropertyModel;
 
 @endphp
 <div class="text-gray-400">
