@@ -16,7 +16,7 @@ use Modules\App\Models\MessageModel;
 use Modules\Post\Models\PostModel;
 
 Route::prefix('post')->group(function () {
-    Route::get('/form/{model}', fn(PostModel $model) => view('viewstructure::components.form.dynamicform', compact('model')))
+    Route::get('/form/{model}', fn(PostModel $model) => view('view::components.form.dynamicform', compact('model')))
         ->name('admin.post.edit');
     Route::view('/list', 'post::components.page.postlistpage')->name('admin.posts');
     Route::get('/{post}/comments',
