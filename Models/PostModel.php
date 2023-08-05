@@ -35,7 +35,7 @@ class PostModel extends BaseModel
         return PostEntityModel::class;
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): BaseFactory
     {
         return new class extends BaseFactory {
             protected $model = PostModel::class;
