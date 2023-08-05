@@ -5,8 +5,8 @@ namespace Modules\Post\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Post\Database\Factories\PostVoteFactory;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Entities\PostVote\PostVoteProps;
 
@@ -16,7 +16,6 @@ use Modules\Post\Entities\PostVote\PostVoteProps;
  * @property-read PostModel $post
  * @property-read User $user
  * @method PostVoteEntityModel toEntity()
- * @method static PostVoteFactory factory()
  */
 class PostVoteModel extends BaseModel
 {
@@ -28,9 +27,11 @@ class PostVoteModel extends BaseModel
         return PostVoteEntityModel::class;
     }
 
-    protected static function newFactory(): PostVoteFactory
+    protected static function newFactory(): BaseFactory
     {
-        return new PostVoteFactory();
+        return new class extends BaseFactory {
+            protected $model = PostVoteModel::class;
+        };
     }
 
     public static function table($alias = null): string

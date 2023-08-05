@@ -6,14 +6,12 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Base\Models\BaseModel;
-use Modules\App\Models\MessageModel;
 use Modules\App\Models\EntityItemModel;
-use Modules\App\Models\EntityRelationModel;
+use Modules\App\Models\MessageModel;
 use Modules\App\Services\Message\HasMessage;
-use Modules\Post\Database\Factories\PostFactory;
+use Modules\Base\Factories\BaseFactory;
+use Modules\Base\Models\BaseModel;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Entities\Post\PostProps;
 
@@ -24,7 +22,6 @@ use Modules\Post\Entities\Post\PostProps;
  * @property-read User $user
  * @property-read EntityItemModel $entity
  * @method PostEntityModel toEntity()
- * @method static PostFactory factory($count = null, $state = [])
  */
 class PostModel extends BaseModel
 {
@@ -38,9 +35,11 @@ class PostModel extends BaseModel
         return PostEntityModel::class;
     }
 
-    protected static function newFactory(): PostFactory
+    protected static function newFactory()
     {
-        return new PostFactory();
+        return new class extends BaseFactory {
+            protected $model = PostModel::class;
+        };
     }
 
     public static function table($alias = null): string
