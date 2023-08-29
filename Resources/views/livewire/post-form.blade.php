@@ -39,14 +39,14 @@
                             @php
                                 $input = "dvui::form.input";
                             @endphp
-                            <x-dvui::form.input :attr="$properties" wire:model.defer="model.title"/>
+                            <x-dvui::form.input :attr="$properties" wire:model="model.title"/>
                         @endif
                         @if($component_->type->name == 'COMBO')
                             @php
                                 $combo = "select";
                             @endphp
                             <x-dvui::form.select :label="$properties['label']"
-                                                 wire:model.defer="model.{{$properties['id']}}">
+                                                 wire:model="model.{{$properties['id']}}">
                                 @foreach($this->getReferencedTableData($component_) as $item)
                                     <x-dvui::form.select.item :value="$item->id"
                                                               :selected="$model->{$properties['id']} == $item->id"
