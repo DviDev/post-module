@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Post\Entities\Post\PostEntityModel;
 
-class CreatePosts extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -16,14 +16,24 @@ class CreatePosts extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $p = PostEntityModel::props(null, true);
 
-            $prop = PostEntityModel::props(null, true);
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->string($prop->title);
-            $table->text($prop->content);
-            $table->string($prop->thumbnail_image_path)->nullable();
-            $table->bigInteger($prop->poll_id)->unsigned()->nullable();
-            $table->timestamp($prop->created_at)->useCurrent();
+            $table->foreignId($p->entity_item_id)->references('id')->on('app_entities')
+                ->cascadeOnUpdate()->restrictOnDelete();
+
+            $table->foreignId($p->user_id)->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+
+            $table->string($p->title);
+            $table->text($p->content);
+            $table->string($p->thumbnail_image_path)->nullable();
+
+            $table->unique([$p->user_id, $p->title]);
+
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
         });
     }
 
@@ -36,4 +46,4 @@ class CreatePosts extends Migration
     {
         Schema::dropIfExists('posts');
     }
-}
+};

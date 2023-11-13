@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Post\Entities\PostTag\PostTagEntityModel;
 
-class CreatePostTags extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,9 @@ class CreatePostTags extends Migration
             $table->id();
 
             $prop = PostTagEntityModel::props(null, true);
-            $table->bigInteger($prop->post_id)->unsigned();
+            $table->foreignId($prop->post_id)
+                ->references('id')->on('posts')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->tag, 50);
         });
     }
@@ -32,4 +34,4 @@ class CreatePostTags extends Migration
     {
         Schema::dropIfExists('post_tags');
     }
-}
+};
