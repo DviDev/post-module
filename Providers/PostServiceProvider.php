@@ -5,8 +5,6 @@ namespace Modules\Post\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Livewire\Livewire;
-use Modules\Post\Http\Livewire\Form\PostForm;
-use Modules\Post\Http\Livewire\Form\PostForm2;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
 use Modules\Post\Http\Livewire\PostCommentTable;
 use Modules\Post\Http\Livewire\PostCommentVoteTable;
@@ -46,8 +44,6 @@ class PostServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Livewire::component('post::form.form1', PostForm::class);
-        Livewire::component('post::form.form2', PostForm2::class);
         Livewire::component('post::page.posts', PostsPage::class);
         Livewire::component('post::comment-table', PostCommentTable::class);
         Livewire::component('post::comment-vote-table', PostCommentVoteTable::class);
