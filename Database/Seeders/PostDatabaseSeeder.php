@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\App\Models\EntityItemModel;
-use Modules\App\Database\Seeders\MessageTableSeeder;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Link\Models\LinkModel;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
@@ -32,19 +31,24 @@ class PostDatabaseSeeder extends Seeder
         $project = $module->project;
 
         $me = User::find(1);
-        foreach ($me->workspaces as $workspace) {
-            $post = PostModel::factory()->for($workspace->user)->create([
+        if ($me->workspaces()->count() == 0) {
+            WorkspaceModel::factory()->for($me)->create();
+        }
+        $me->load('workspaces');
+        $workspaces = WorkspaceModel::query()->where('user_id', $me->id)->get();
+        foreach ($workspaces as $workspace) {
+            $post = PostModel::factory()->for($me)->create([
                 'entity_item_id' => EntityItemModel::factory()->create()->id
             ]);
-            $this->command->warn('saving post ' . $post->id . ' ' . $post->entity_item_id);
+            $this->command->warn(PHP_EOL.'creating post ' . $post->id . ' ' . $post->entity_item_id);
 
-            $posts = PostModel::where('user_id', $workspace->user_id)->with('comments');
+            $posts = PostModel::where('user_id', $me->id)
+//                ->with('comments')
+            ;
 
-            $seed_total = $posts->count();
             $seeded = 0;
-            $posts->each(function (PostModel $post) use ($workspace, $seed_total, &$seeded) {
+            $posts->each(function (PostModel $post) use ($workspace, &$seeded) {
                 $seeded++;
-                ds("workspace post $seeded / $seed_total");
 
                 $this->syncWorkspaceWithPost($workspace, $post);
 
@@ -67,17 +71,11 @@ class PostDatabaseSeeder extends Seeder
     function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
     {
         WorkspacePostModel::factory()->for($workspace, 'workspace')->for($post, 'post')->create();
-        ds("workspace $workspace->id post $post->id");
     }
 
     function createPostTags(PostModel $post): void
     {
         PostTagModel::factory()->for($post, 'post')->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create();
-
-        $tags = $post->tags();
-        $total_seed = $tags->count();
-        $seeded = 0;
-        $tags->each(fn(PostTagModel $tag) => ds("post $tag->post_id tag $seeded / $total_seed"));
     }
 
     function postVotes(PostModel $post, WorkspaceModel $workspace): void
@@ -98,7 +96,6 @@ class PostDatabaseSeeder extends Seeder
             $vote = $choice($factory);
 
             $seeded++;
-            ds("post $post->id user $user->id " . ($vote->up_vote ? 'up-voted ' : 'down-voted') . " $seeded / $seed_total");
         });
     }
 
@@ -111,7 +108,7 @@ class PostDatabaseSeeder extends Seeder
         $post->save();
 
         $participants->each(function (User $user) use ($post, $workspace, $entity) {
-            $this->call(MessageTableSeeder::class, parameters: compact('entity', 'user'));
+            //
         });
     }
 }
