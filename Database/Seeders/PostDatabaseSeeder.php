@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\App\Models\EntityItemModel;
 use Modules\DBMap\Domains\ScanTableDomain;
-use Modules\Link\Models\LinkModel;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Models\PostModel;
@@ -31,10 +30,9 @@ class PostDatabaseSeeder extends Seeder
         $project = $module->project;
 
         $me = User::find(1);
-        if ($me->workspaces()->count() == 0) {
+        if (WorkspaceModel::byUserId($me->id)->count() == 0) {
             WorkspaceModel::factory()->for($me)->create();
         }
-        $me->load('workspaces');
         $workspaces = WorkspaceModel::query()->where('user_id', $me->id)->get();
         foreach ($workspaces as $workspace) {
             $post = PostModel::factory()->for($me)->create([
