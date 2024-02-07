@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\App\Models\EntityItemModel;
 use Modules\App\Models\MessageModel;
+use Modules\App\Models\RecordModel;
 use Modules\App\Services\Message\HasMessage;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
@@ -20,7 +20,7 @@ use Modules\Post\Entities\Post\PostProps;
  * @link https://github.com/DaviMenezes
  * @property-read PostTagModel[] $tags
  * @property-read User $user
- * @property-read EntityItemModel $entity
+ * @property-read RecordModel $entity
  * @method PostEntityModel toEntity()
  */
 class PostModel extends BaseModel
@@ -59,8 +59,8 @@ class PostModel extends BaseModel
 
     public function comments(): HasMany
     {
-        return $this->hasMany(MessageModel::class, 'entity_item_id', 'entity_item_id');
-//        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'entity_item_id', 'entity_item_id', 'item2');
+        return $this->hasMany(MessageModel::class, 'record_id', 'record_id');
+//        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'record_id', 'record_id', 'item2');
     }
 
     public function votes(): HasMany
@@ -70,7 +70,7 @@ class PostModel extends BaseModel
 
     public function entity(): BelongsTo
     {
-        return $this->belongsTo(EntityItemModel::class, 'entity_item_id');
+        return $this->belongsTo(RecordModel::class, 'record_id');
     }
 
 }

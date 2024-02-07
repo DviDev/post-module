@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
-use Modules\App\Models\EntityItemModel;
+use Modules\App\Models\RecordModel;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
@@ -36,9 +36,9 @@ class PostDatabaseSeeder extends Seeder
         $workspaces = WorkspaceModel::query()->where('user_id', $me->id)->get();
         foreach ($workspaces as $workspace) {
             $post = PostModel::factory()->for($me)->create([
-                'entity_item_id' => EntityItemModel::factory()->create()->id
+                'record_id' => RecordModel::factory()->create()->id
             ]);
-            $this->command->warn(PHP_EOL.'creating post ' . $post->id . ' ' . $post->entity_item_id);
+            $this->command->warn(PHP_EOL . 'creating post ' . $post->id . ' ' . $post->record_id);
 
             $posts = PostModel::where('user_id', $me->id)
 //                ->with('comments')
@@ -101,8 +101,8 @@ class PostDatabaseSeeder extends Seeder
     {
         $participants = $workspace->participants();
 
-        $entity = EntityItemModel::factory()->create();
-        $post->entity_item_id = $entity->id;
+        $entity = RecordModel::factory()->create();
+        $post->record_id = $entity->id;
         $post->save();
 
         $participants->each(function (User $user) use ($post, $workspace, $entity) {
