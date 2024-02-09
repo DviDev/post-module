@@ -13,7 +13,6 @@ use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
 use Modules\Post\Models\PostVoteModel;
-use Modules\Project\Database\Seeders\ProjectTableSeeder;
 use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
@@ -61,8 +60,7 @@ class PostDatabaseSeeder extends Seeder
         $project->posts()->attach(PostModel::query()->get()->modelKeys());
 
         $this->call(class: PermissionTableSeeder::class, parameters: ['module' => $module]);
-
-        $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
+//        $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
 
     }
 
