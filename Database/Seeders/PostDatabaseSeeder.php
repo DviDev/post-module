@@ -26,7 +26,7 @@ class PostDatabaseSeeder extends Seeder
 
         (new ScanTableDomain())->scan('post');
 
-        $module = ProjectModuleModel::query()->where('name', 'Post')->first();
+        $module = ProjectModuleModel::byName('Post');
         $project = $module->project;
 
         $me = User::find(1);
