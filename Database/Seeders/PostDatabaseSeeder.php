@@ -61,7 +61,7 @@ class PostDatabaseSeeder extends BaseSeeder
 
         $this->call(class: PermissionTableSeeder::class, parameters: ['module' => $module]);
 
-        $this->commandInfo(__CLASS__, '✔️');
+        $this->commandInfo(__CLASS__, '🟢 done');
     }
 
     function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
