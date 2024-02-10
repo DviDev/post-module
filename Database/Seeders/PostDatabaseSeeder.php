@@ -5,8 +5,8 @@ namespace Modules\Post\Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Seeder;
 use Modules\App\Models\RecordModel;
+use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
@@ -17,11 +17,13 @@ use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
 
-class PostDatabaseSeeder extends Seeder
+class PostDatabaseSeeder extends BaseSeeder
 {
     public function run()
     {
         Model::unguard();
+
+        $this->commandWarn(__CLASS__, "🌱 seeding");
 
         (new ScanTableDomain())->scan('post');
 
@@ -39,9 +41,7 @@ class PostDatabaseSeeder extends Seeder
             ]);
             $this->command->warn(PHP_EOL . 'creating post ' . $post->id . ' ' . $post->record_id);
 
-            $posts = PostModel::where('user_id', $me->id)
-//                ->with('comments')
-            ;
+            $posts = PostModel::where('user_id', $me->id);
 
             $seeded = 0;
             $posts->each(function (PostModel $post) use ($workspace, &$seeded) {
@@ -60,8 +60,8 @@ class PostDatabaseSeeder extends Seeder
         $project->posts()->attach(PostModel::query()->get()->modelKeys());
 
         $this->call(class: PermissionTableSeeder::class, parameters: ['module' => $module]);
-//        $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
 
+        $this->commandInfo(__CLASS__, '✔️');
     }
 
     function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
