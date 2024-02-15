@@ -14,6 +14,9 @@
 use Illuminate\Support\Facades\Route;
 use Modules\App\Models\MessageModel;
 use Modules\Post\Models\PostModel;
+use Modules\Project\Services\DynamicRoutes;
+
+DynamicRoutes::all('Post');
 
 Route::prefix('post')->group(function () {
     Route::get('/form/{model}', fn(PostModel $model) => view('view::components.form.dynamicform', compact('model')))

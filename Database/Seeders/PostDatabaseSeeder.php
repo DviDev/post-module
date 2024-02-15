@@ -5,46 +5,43 @@ namespace Modules\Post\Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Seeder;
-use Modules\App\Models\EntityItemModel;
+use Modules\App\Models\RecordModel;
+use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\DBMap\Domains\ScanTableDomain;
-use Modules\Link\Models\LinkModel;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
 use Modules\Post\Models\PostVoteModel;
-use Modules\Project\Database\Seeders\ProjectTableSeeder;
 use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
 
-class PostDatabaseSeeder extends Seeder
+class PostDatabaseSeeder extends BaseSeeder
 {
     public function run()
     {
         Model::unguard();
 
+        $this->commandWarn(__CLASS__, "🌱 seeding");
+
         (new ScanTableDomain())->scan('post');
 
-        $module = ProjectModuleModel::query()->where('name', 'Post')->first();
+        $module = ProjectModuleModel::byName('Post');
         $project = $module->project;
 
         $me = User::find(1);
-        if ($me->workspaces()->count() == 0) {
+        if (WorkspaceModel::byUserId($me->id)->count() == 0) {
             WorkspaceModel::factory()->for($me)->create();
         }
-        $me->load('workspaces');
         $workspaces = WorkspaceModel::query()->where('user_id', $me->id)->get();
         foreach ($workspaces as $workspace) {
             $post = PostModel::factory()->for($me)->create([
-                'entity_item_id' => EntityItemModel::factory()->create()->id
+                'record_id' => RecordModel::factory()->create()->id
             ]);
-            $this->command->warn(PHP_EOL.'creating post ' . $post->id . ' ' . $post->entity_item_id);
+            $this->command->warn(PHP_EOL . 'creating post ' . $post->id . ' ' . $post->record_id);
 
-            $posts = PostModel::where('user_id', $me->id)
-//                ->with('comments')
-            ;
+            $posts = PostModel::where('user_id', $me->id);
 
             $seeded = 0;
             $posts->each(function (PostModel $post) use ($workspace, &$seeded) {
@@ -64,8 +61,7 @@ class PostDatabaseSeeder extends Seeder
 
         $this->call(class: PermissionTableSeeder::class, parameters: ['module' => $module]);
 
-        $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
-
+        $this->commandInfo(__CLASS__, '🟢 done');
     }
 
     function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
@@ -103,8 +99,8 @@ class PostDatabaseSeeder extends Seeder
     {
         $participants = $workspace->participants();
 
-        $entity = EntityItemModel::factory()->create();
-        $post->entity_item_id = $entity->id;
+        $entity = RecordModel::factory()->create();
+        $post->record_id = $entity->id;
         $post->save();
 
         $participants->each(function (User $user) use ($post, $workspace, $entity) {
