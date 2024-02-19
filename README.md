@@ -1,6 +1,11 @@
 # Post Module
 ## Simple management of Posts
 
+### Module Dependencies
+
+1. [App](https://github.com/DviDev/app-module)
+2. [Workspace](https://github.com/DviDev/workspace-module)
+
 ### Post
 
 ```mermaid
