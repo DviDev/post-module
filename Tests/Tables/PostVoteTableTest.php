@@ -1,5 +1,7 @@
 <?php
 
+namespace Modules\Post\Tests\Tables;
+
 use Modules\Base\Services\Tests\BaseTest;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Models\PostVoteModel;
