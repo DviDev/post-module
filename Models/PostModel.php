@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\App\Models\MessageModel;
-use Modules\App\Models\RecordModel;
 use Modules\App\Services\Message\HasMessage;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
+use Modules\Base\Models\RecordModel;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Entities\Post\PostProps;
 
