@@ -6,14 +6,14 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Modules\App\Entities\MessageVote\MessageVoteEntityModel;
-use Modules\App\Models\MessageModel;
-use Modules\App\Models\MessageVoteModel;
 use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\Base\Models\RecordModel;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
+use Modules\Post\Entities\MessageVote\MessageVoteEntityModel;
 use Modules\Post\Entities\PostVote\PostVoteEntityModel;
+use Modules\Post\Models\MessageModel;
+use Modules\Post\Models\MessageVoteModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
 use Modules\Post\Models\PostVoteModel;
@@ -82,7 +82,7 @@ class PostDatabaseSeeder extends BaseSeeder
 
     function createPostTags(PostModel $post): void
     {
-        PostTagModel::factory()->for($post, 'post')->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create();
+        PostTagModel::factory()->for($post, 'post')->count(config('post.SEED_POST_TAGS_COUNT'))->create();
     }
 
     function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void

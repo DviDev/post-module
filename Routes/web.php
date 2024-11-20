@@ -12,7 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Route;
-use Modules\App\Models\MessageModel;
+use Modules\Post\Models\MessageModel;
 use Modules\Post\Models\PostModel;
 use Modules\Project\Services\DynamicRoutes;
 
