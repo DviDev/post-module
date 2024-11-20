@@ -2,15 +2,14 @@
 
 namespace Modules\Post\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
 use Modules\Post\Http\Livewire\PostCommentTable;
 use Modules\Post\Http\Livewire\PostCommentVoteTable;
 use Modules\Post\Http\Livewire\PostTable;
 use Modules\Post\Http\Livewire\PostTagTable;
-use Modules\Post\Http\Livewire\PostVoteTable;
 
 class PostServiceProvider extends ServiceProvider
 {
@@ -49,7 +48,6 @@ class PostServiceProvider extends ServiceProvider
         Livewire::component('post::comment-vote-table', PostCommentVoteTable::class);
         Livewire::component('post::table', PostTable::class);
         Livewire::component('post::tag-table', PostTagTable::class);
-        Livewire::component('post::vote-table', PostVoteTable::class);
         $this->app->register(RouteServiceProvider::class);
     }
 

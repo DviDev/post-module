@@ -30,9 +30,9 @@ class PostModel extends BaseModel
     use SoftDeletes;
     use HasMessage;
 
-    public function modelEntity(): string
+    public static function table($alias = null): string
     {
-        return PostEntityModel::class;
+        return self::dbTable('thread_posts', $alias);
     }
 
     protected static function newFactory(): BaseFactory
@@ -42,9 +42,9 @@ class PostModel extends BaseModel
         };
     }
 
-    public static function table($alias = null): string
+    public function modelEntity(): string
     {
-        return self::dbTable('posts', $alias);
+        return PostEntityModel::class;
     }
 
     public function tags(): HasMany
@@ -63,11 +63,6 @@ class PostModel extends BaseModel
 //        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'record_id', 'record_id', 'item2');
     }
 
-    public function votes(): HasMany
-    {
-        return $this->hasMany(PostVoteModel::class, 'post_id');
-    }
-
     public function entity(): BelongsTo
     {
         return $this->belongsTo(RecordModel::class, 'record_id');
@@ -77,5 +72,4 @@ class PostModel extends BaseModel
     {
         return $this->belongsTo(ThreadModel::class, 'thread_id');
     }
-
 }

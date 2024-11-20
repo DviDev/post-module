@@ -3,8 +3,9 @@
 namespace Modules\Post\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Post\Entities\Post\PostEntityModel;
 use Illuminate\Validation\Rule;
+use Modules\Post\Entities\Post\PostEntityModel;
+use Modules\Post\Models\PostModel;
 
 class PostSave extends FormRequest
 {
@@ -20,7 +21,7 @@ class PostSave extends FormRequest
             $p->id => 'required',
             $p->user_id => [
                 'required',
-                Rule::unique('posts')
+                Rule::unique(PostModel::table())
                     ->where('user_id', $this->get($p->user_id))
                     ->where('title', $this->get($p->title))
             ],

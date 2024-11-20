@@ -10,11 +10,9 @@ use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\Base\Models\RecordModel;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
-use Modules\Post\Entities\PostVote\PostVoteEntityModel;
 use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
-use Modules\Post\Models\PostVoteModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Post\Models\ThreadVoteModel;
 use Modules\Project\Models\ProjectModuleModel;
@@ -94,9 +92,9 @@ class PostDatabaseSeeder extends BaseSeeder
     function createWorkspaceParticipantPostVotes(PostModel $post, Collection $participants): void
     {
         $participants->each(function (User $user) use ($post) {
-            $postVote = PostVoteEntityModel::props();
-            $like = fn(Factory $factory) => $factory->create([$postVote->up_vote => 1]);
-            $dislike = fn(Factory $factory) => $factory->create([$postVote->down_vote => 1]);
+            $postVote = ThreadVoteEntityModel::props();
+            $like = fn(Factory $factory) => $factory->create([$postVote->like => 1]);
+            $dislike = fn(Factory $factory) => $factory->create([$postVote->dislike => 1]);
 
             /**@var \Closure $choice */
             $choice = collect([$like, $dislike])->random();
@@ -105,7 +103,6 @@ class PostDatabaseSeeder extends BaseSeeder
             $factory = ThreadVoteModel::factory()
                 ->for($thread, 'thread')
                 ->for($user, 'user');
-            /**@var PostVoteModel $vote */
             $choice($factory);
         });
     }
