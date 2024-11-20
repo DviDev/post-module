@@ -7,41 +7,41 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Post\Entities\MessageVote\MessageVoteEntityModel;
-use Modules\Post\Entities\MessageVote\MessageVoteProps;
+use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
+use Modules\Post\Entities\ThreadVote\ThreadVoteProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
- * @property-read MessageModel $message
+ * @property-read ThreadModel $thread
  * @property-read User $user
- * @method MessageVoteEntityModel toEntity()
+ * @method ThreadVoteEntityModel toEntity()
  */
-class MessageVoteModel extends BaseModel
+class ThreadVoteModel extends BaseModel
 {
     use HasFactory;
-    use MessageVoteProps;
+    use ThreadVoteProps;
 
     public static function table($alias = null): string
     {
-        return self::dbTable('app_message_votes', $alias);
+        return self::dbTable('thread_votes', $alias);
     }
 
     protected static function newFactory(): BaseFactory
     {
         return new class extends BaseFactory {
-            protected $model = MessageVoteModel::class;
+            protected $model = ThreadVoteModel::class;
         };
     }
 
     public function modelEntity(): string
     {
-        return MessageVoteEntityModel::class;
+        return ThreadVoteEntityModel::class;
     }
 
-    public function message(): BelongsTo
+    public function thread(): BelongsTo
     {
-        return $this->belongsTo(MessageModel::class, 'comment_id');
+        return $this->belongsTo(ThreadModel::class, 'thread_id');
     }
 
     public function user(): BelongsTo

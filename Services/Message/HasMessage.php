@@ -4,11 +4,11 @@ namespace Modules\Post\Services\Message;
 
 use Modules\Base\Models\RecordModel;
 use Modules\Base\Models\RecordRelationModel;
-use Modules\Post\Models\MessageModel;
+use Modules\Post\Models\ThreadModel;
 
 trait HasMessage
 {
-    public function addMessage(MessageModel $comment): MessageModel
+    public function addMessage(ThreadModel $comment): ThreadModel
     {
         if (!$this->record_id) {
             $this->record_id = RecordModel::create()->id;

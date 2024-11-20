@@ -24,6 +24,9 @@ return new class extends Migration
             $table->foreignId($p->user_id)->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
 
+            $table->foreignId($p->thread_id)->references('id')->on('thread')
+                ->cascadeOnUpdate()->restrictOnDelete();
+
             $table->string($p->title);
             $table->text($p->content);
             $table->string($p->thumbnail_image_path)->nullable();

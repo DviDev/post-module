@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Post\Entities\Message;
+namespace Modules\Post\Entities\Thread;
 
 /**
  * @property $id
@@ -13,6 +13,6 @@ namespace Modules\Post\Entities\Message;
  * @property $updated_at
  * @property $deleted_at
  */
-trait MessageProps
+trait ThreadProps
 {
 }

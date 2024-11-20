@@ -3,15 +3,15 @@
 namespace Modules\Post\Tests\Tables;
 
 use Modules\Base\Services\Tests\BaseTest;
-use Modules\Post\Entities\MessageVote\MessageVoteEntityModel;
-use Modules\Post\Models\MessageVoteModel;
+use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
+use Modules\Post\Models\ThreadVoteModel;
 
 /** @group app.message.table */
 class MessageVoteTableTest extends BaseTest
 {
-    public function getEntityClass(): string|MessageVoteEntityModel
+    public function getEntityClass(): string|ThreadVoteEntityModel
     {
-        return MessageVoteEntityModel::class;
+        return ThreadVoteEntityModel::class;
     }
 
     public function testTableMustExist()
@@ -49,13 +49,13 @@ class MessageVoteTableTest extends BaseTest
         parent::shouldDelete();
     }
 
-    protected function create(): MessageVoteModel
+    protected function create(): ThreadVoteModel
     {
         return $this->getModelClass()::factory()->create();
     }
 
-    public function getModelClass(): string|MessageVoteModel
+    public function getModelClass(): string|ThreadVoteModel
     {
-        return MessageVoteModel::class;
+        return ThreadVoteModel::class;
     }
 }

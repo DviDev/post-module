@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Base\Models\RecordModel;
-use Modules\Post\Entities\Message\MessageEntityModel;
-use Modules\Post\Entities\Message\MessageProps;
+use Modules\Post\Entities\Thread\ThreadEntityModel;
+use Modules\Post\Entities\Thread\ThreadProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
@@ -19,23 +19,23 @@ use Modules\Post\Entities\Message\MessageProps;
  * @property-read PostModel $post
  * @property-read User $user
  * @property-read RecordModel $entity
- * @method MessageEntityModel toEntity()
+ * @method ThreadEntityModel toEntity()
  */
-class MessageModel extends BaseModel
+class ThreadModel extends BaseModel
 {
     use HasFactory;
-    use MessageProps;
+    use ThreadProps;
     use SoftDeletes;
 
     public static function table($alias = null): string
     {
-        return self::dbTable('app_messages', $alias);
+        return self::dbTable('threads', $alias);
     }
 
     protected static function newFactory(): BaseFactory
     {
         return new class extends BaseFactory {
-            protected $model = MessageModel::class;
+            protected $model = ThreadModel::class;
         };
     }
 
@@ -50,7 +50,7 @@ class MessageModel extends BaseModel
 
     public function modelEntity(): string
     {
-        return MessageEntityModel::class;
+        return ThreadEntityModel::class;
     }
 
     public function post(): BelongsTo
@@ -65,7 +65,7 @@ class MessageModel extends BaseModel
 
     public function votes(): HasMany
     {
-        return $this->hasMany(MessageVoteModel::class, 'comment_id');
+        return $this->hasMany(ThreadVoteModel::class, 'thread_id');
     }
 
     public function entity(): BelongsTo

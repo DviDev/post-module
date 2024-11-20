@@ -20,6 +20,7 @@ use Modules\Post\Services\Message\HasMessage;
  * @property-read PostTagModel[] $tags
  * @property-read User $user
  * @property-read RecordModel $entity
+ * @property-read ThreadModel $thread
  * @method PostEntityModel toEntity()
  */
 class PostModel extends BaseModel
@@ -58,7 +59,7 @@ class PostModel extends BaseModel
 
     public function comments(): HasMany
     {
-        return $this->hasMany(MessageModel::class, 'record_id', 'record_id');
+        return $this->hasMany(ThreadModel::class, 'record_id', 'record_id');
 //        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'record_id', 'record_id', 'item2');
     }
 
@@ -70,6 +71,11 @@ class PostModel extends BaseModel
     public function entity(): BelongsTo
     {
         return $this->belongsTo(RecordModel::class, 'record_id');
+    }
+
+    public function thread(): BelongsTo
+    {
+        return $this->belongsTo(ThreadModel::class, 'thread_id');
     }
 
 }
