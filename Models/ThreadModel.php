@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Base\Models\RecordModel;
@@ -16,9 +17,9 @@ use Modules\Post\Entities\Thread\ThreadProps;
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
- * @property-read PostModel $post
  * @property-read User $user
  * @property-read RecordModel $entity
+ * @property-read ThreadModel[]|Collection $children
  * @method ThreadEntityModel toEntity()
  */
 class ThreadModel extends BaseModel
@@ -46,16 +47,15 @@ class ThreadModel extends BaseModel
         static::creating(function (self $model) {
             $model->record_id = $model->record_id ?: RecordModel::crete()->id;
         });
+
+        static::deleting(function (ThreadModel $thread) {
+            $thread->children->each(fn($child) => $child->delete());
+        });
     }
 
     public function modelEntity(): string
     {
         return ThreadEntityModel::class;
-    }
-
-    public function post(): BelongsTo
-    {
-        return $this->belongsTo(PostModel::class, 'post_id');
     }
 
     public function user(): BelongsTo
@@ -77,5 +77,10 @@ class ThreadModel extends BaseModel
     {
         $this->record_id = $this->record_id ?: RecordModel::crete()->id;
         return parent::save();
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_id');
     }
 }
