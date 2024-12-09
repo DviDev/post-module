@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_tags', function (Blueprint $table) {
+        Schema::create('thread_post_tags', function (Blueprint $table) {
             $table->id();
 
             $prop = PostTagEntityModel::props(null, true);
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tags');
+        Schema::dropIfExists('thread_post_tags');
     }
 };

@@ -34,7 +34,7 @@ class PostTagModel extends BaseModel
 
     public static function table($alias = null): string
     {
-        return self::dbTable('post_tags', $alias);
+        return self::dbTable('thread_post_tags', $alias);
     }
 
     public function post(): BelongsTo

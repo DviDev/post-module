@@ -150,3 +150,7 @@ graph TD
       2. Field validations
          1. id
             1. [ ] required
+
+### Messages
+
+O objetivo desta entidade é agrupar a lógica por trás de uma "postagem" que pode ter comentários, votos, arquivos etc.

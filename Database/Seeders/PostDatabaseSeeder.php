@@ -6,17 +6,15 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Modules\App\Entities\MessageVote\MessageVoteEntityModel;
-use Modules\App\Models\MessageModel;
-use Modules\App\Models\MessageVoteModel;
-use Modules\App\Models\RecordModel;
 use Modules\Base\Database\Seeders\BaseSeeder;
+use Modules\Base\Models\RecordModel;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
-use Modules\Post\Entities\PostVote\PostVoteEntityModel;
+use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
-use Modules\Post\Models\PostVoteModel;
+use Modules\Post\Models\ThreadModel;
+use Modules\Post\Models\ThreadVoteModel;
 use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
@@ -76,13 +74,14 @@ class PostDatabaseSeeder extends BaseSeeder
         return PostModel::factory(config('post.SEED_POSTS_COUNT'))->for($me)
             ->afterCreating(fn(PostModel $post) => $this->createPostTags($post))
             ->create([
+                'thread_id' => ThreadModel::factory()->create()->id,
                 'record_id' => RecordModel::factory()->create()->id
             ]);
     }
 
     function createPostTags(PostModel $post): void
     {
-        PostTagModel::factory()->for($post, 'post')->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create();
+        PostTagModel::factory()->for($post, 'post')->count(config('post.SEED_POST_TAGS_COUNT'))->create();
     }
 
     function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
@@ -93,15 +92,17 @@ class PostDatabaseSeeder extends BaseSeeder
     function createWorkspaceParticipantPostVotes(PostModel $post, Collection $participants): void
     {
         $participants->each(function (User $user) use ($post) {
-            $postVote = PostVoteEntityModel::props();
-            $fnUpVote = fn(Factory $factory) => $factory->create([$postVote->up_vote => 1]);
-            $fnDownVote = fn(Factory $factory) => $factory->create([$postVote->down_vote => 1]);
+            $postVote = ThreadVoteEntityModel::props();
+            $like = fn(Factory $factory) => $factory->create([$postVote->like => 1]);
+            $dislike = fn(Factory $factory) => $factory->create([$postVote->dislike => 1]);
 
             /**@var \Closure $choice */
-            $choice = collect([$fnUpVote, $fnDownVote])->random();
+            $choice = collect([$like, $dislike])->random();
 
-            $factory = PostVoteModel::factory()->for($post, 'post')->for($user, 'user');
-            /**@var PostVoteModel $vote */
+            $thread = $post->thread;
+            $factory = ThreadVoteModel::factory()
+                ->for($thread, 'thread')
+                ->for($user, 'user');
             $choice($factory);
         });
     }
@@ -113,18 +114,18 @@ class PostDatabaseSeeder extends BaseSeeder
         $post->save();
 
         $participants->each(function (User $user) use ($post) {
-            MessageModel::factory(config('post.SEED_POST_COMMENTS_COUNT'))->for($user)->create(['record_id' => $post->record_id]);
+            ThreadModel::factory(config('post.SEED_POST_COMMENTS_COUNT'))->for($user)->create(['record_id' => $post->record_id]);
         });
         foreach ($post->comments() as $comment) {
             $participants->each(function (User $user) use ($post, $comment) {
-                $vote = MessageVoteEntityModel::props();
-                $fnUpVote = fn(Factory $factory) => $factory->create([$vote->up_vote => 1]);
-                $fnDownVote = fn(Factory $factory) => $factory->create([$vote->down_vote => 1]);
+                $vote = ThreadVoteEntityModel::props();
+                $fnUpVote = fn(Factory $factory) => $factory->create([$vote->like => 1]);
+                $fnDownVote = fn(Factory $factory) => $factory->create([$vote->dislike => 1]);
 
                 /**@var \Closure $choice */
                 $choice = collect([$fnUpVote, $fnDownVote])->random();
 
-                $factory = MessageVoteModel::factory()->for($comment, 'comment')->for($user, 'user');
+                $factory = ThreadVoteModel::factory()->for($comment, 'comment')->for($user, 'user');
                 $choice($factory);
             });
         }

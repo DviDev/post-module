@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Post\Entities\PostVote\PostVoteEntityModel;
+use Modules\Post\Entities\Post\PostEntityModel;
 
 return new class extends Migration
 {
@@ -14,18 +14,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_votes', function (Blueprint $table) {
+        Schema::create('thread_posts', function (Blueprint $table) {
             $table->id();
+            $p = PostEntityModel::props(null, true);
 
-            $p = PostVoteEntityModel::props(null, true);
-            $table->foreignId($p->user_id)
-                ->references('id')->on('users')
+            $table->foreignId($p->record_id)->references('id')->on('base_records')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId($p->post_id)
-                ->references('id')->on('posts')
+
+            $table->foreignId($p->user_id)->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->boolean($p->up_vote)->nullable();
-            $table->boolean($p->down_vote)->nullable();
+
+            $table->foreignId($p->thread_id)->references('id')->on('thread')
+                ->cascadeOnUpdate()->restrictOnDelete();
+
+            $table->string($p->title);
+            $table->text($p->content);
+            $table->string($p->thumbnail_image_path)->nullable();
+
+            $table->unique([$p->user_id, $p->title]);
 
             $table->timestamp($p->created_at)->useCurrent();
             $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
@@ -41,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_votes');
+        Schema::dropIfExists('thread_posts');
     }
 };

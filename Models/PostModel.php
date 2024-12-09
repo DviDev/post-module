@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\App\Models\MessageModel;
-use Modules\App\Models\RecordModel;
-use Modules\App\Services\Message\HasMessage;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
+use Modules\Base\Models\RecordModel;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Entities\Post\PostProps;
+use Modules\Post\Services\Message\HasMessage;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
@@ -21,6 +20,7 @@ use Modules\Post\Entities\Post\PostProps;
  * @property-read PostTagModel[] $tags
  * @property-read User $user
  * @property-read RecordModel $entity
+ * @property-read ThreadModel $thread
  * @method PostEntityModel toEntity()
  */
 class PostModel extends BaseModel
@@ -30,9 +30,9 @@ class PostModel extends BaseModel
     use SoftDeletes;
     use HasMessage;
 
-    public function modelEntity(): string
+    public static function table($alias = null): string
     {
-        return PostEntityModel::class;
+        return self::dbTable('thread_posts', $alias);
     }
 
     protected static function newFactory(): BaseFactory
@@ -42,9 +42,9 @@ class PostModel extends BaseModel
         };
     }
 
-    public static function table($alias = null): string
+    public function modelEntity(): string
     {
-        return self::dbTable('posts', $alias);
+        return PostEntityModel::class;
     }
 
     public function tags(): HasMany
@@ -59,13 +59,8 @@ class PostModel extends BaseModel
 
     public function comments(): HasMany
     {
-        return $this->hasMany(MessageModel::class, 'record_id', 'record_id');
+        return $this->hasMany(ThreadModel::class, 'record_id', 'record_id');
 //        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'record_id', 'record_id', 'item2');
-    }
-
-    public function votes(): HasMany
-    {
-        return $this->hasMany(PostVoteModel::class, 'post_id');
     }
 
     public function entity(): BelongsTo
@@ -73,4 +68,8 @@ class PostModel extends BaseModel
         return $this->belongsTo(RecordModel::class, 'record_id');
     }
 
+    public function thread(): BelongsTo
+    {
+        return $this->belongsTo(ThreadModel::class, 'thread_id');
+    }
 }
