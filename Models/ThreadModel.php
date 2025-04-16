@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Modules\App\Models\RecordModel;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Base\Models\RecordModel;
 use Modules\Post\Entities\Thread\ThreadEntityModel;
 use Modules\Post\Entities\Thread\ThreadProps;
 
@@ -45,7 +45,7 @@ class ThreadModel extends BaseModel
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->record_id = $model->record_id ?: RecordModel::crete()->id;
+            $model->record_id = $model->record_id ?: RecordModel::create(['name' => 'empty'])->id;
         });
 
         static::deleting(function (ThreadModel $thread) {
@@ -71,12 +71,6 @@ class ThreadModel extends BaseModel
     public function entity(): BelongsTo
     {
         return $this->belongsTo(RecordModel::class, 'record_id');
-    }
-
-    public function save(array $options = []): bool
-    {
-        $this->record_id = $this->record_id ?: RecordModel::crete()->id;
-        return parent::save();
     }
 
     public function children(): HasMany
