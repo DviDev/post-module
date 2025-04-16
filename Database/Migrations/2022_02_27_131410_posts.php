@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId($p->user_id)->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
 
-            $table->foreignId($p->thread_id)->references('id')->on('thread')
+            $table->foreignId($p->thread_id)->references('id')->on('threads')
                 ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->string($p->title);

@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('thread_post_categories', function (Blueprint $table) {
             $p = PostCategoryEntityModel::props(null, true);
             $table->id();
-            $table->foreignId($p->post_id)->references('id')->on('posts')
+            $table->foreignId($p->post_id)->references('id')->on('thread_posts')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId($p->created_by_user_id)->references('id')->on('users')
                 ->cascadeOnDelete()->cascadeOnUpdate();
