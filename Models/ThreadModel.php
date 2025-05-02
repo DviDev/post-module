@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Modules\App\Models\RecordModel;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
+use Modules\Base\Models\RecordModel;
 use Modules\Post\Entities\Thread\ThreadEntityModel;
 use Modules\Post\Entities\Thread\ThreadProps;
 
@@ -27,6 +27,11 @@ class ThreadModel extends BaseModel
     use HasFactory;
     use ThreadProps;
     use SoftDeletes;
+
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+    protected $with = ['children', 'user'];
 
     public static function table($alias = null): string
     {
@@ -45,7 +50,7 @@ class ThreadModel extends BaseModel
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->record_id = $model->record_id ?: RecordModel::create(['name' => 'empty'])->id;
+            $model->record_id = $model->record_id ?: RecordModel::create(['name' => 'empty', 'type_id' => 1])->id;
         });
 
         static::deleting(function (ThreadModel $thread) {
