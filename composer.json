@@ -1,10 +1,11 @@
 {
-    "name": "nwidart/post",
-    "description": "",
+    "name": "dvidev/post-module",
+    "description": "Post Laravel Module",
+    "type": "laravel-module",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Davi Menezes",
+            "email": "davimenezes.dev@gmail.com"
         }
     ],
     "extra": {
