@@ -28,6 +28,11 @@ class ThreadModel extends BaseModel
     use ThreadProps;
     use SoftDeletes;
 
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+    protected $with = ['children', 'user'];
+
     public static function table($alias = null): string
     {
         return self::dbTable('threads', $alias);
@@ -45,7 +50,7 @@ class ThreadModel extends BaseModel
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->record_id = $model->record_id ?: RecordModel::crete()->id;
+            $model->record_id = $model->record_id ?: RecordModel::create(['name' => 'empty', 'type_id' => 1])->id;
         });
 
         static::deleting(function (ThreadModel $thread) {
@@ -71,12 +76,6 @@ class ThreadModel extends BaseModel
     public function entity(): BelongsTo
     {
         return $this->belongsTo(RecordModel::class, 'record_id');
-    }
-
-    public function save(array $options = []): bool
-    {
-        $this->record_id = $this->record_id ?: RecordModel::crete()->id;
-        return parent::save();
     }
 
     public function children(): HasMany
