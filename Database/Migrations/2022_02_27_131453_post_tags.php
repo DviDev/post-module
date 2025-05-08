@@ -19,7 +19,7 @@ return new class extends Migration
 
             $prop = PostTagEntityModel::props(null, true);
             $table->foreignId($prop->post_id)
-                ->references('id')->on('posts')
+                ->references('id')->on('thread_posts')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->tag, 50);
         });
