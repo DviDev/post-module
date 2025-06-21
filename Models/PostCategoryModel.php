@@ -10,8 +10,11 @@ use Modules\Post\Entities\PostCategory\PostCategoryProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read PostCategoryModel $model
+ *
  * @method PostCategoryEntityModel toEntity()
  */
 class PostCategoryModel extends BaseModel
@@ -26,7 +29,8 @@ class PostCategoryModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = PostCategoryModel::class;
         };
     }

@@ -11,8 +11,11 @@ use Modules\Post\Entities\PostTag\PostTagProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read PostModel $post
+ *
  * @method PostTagEntityModel toEntity()
  */
 class PostTagModel extends BaseModel
@@ -27,7 +30,8 @@ class PostTagModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = PostTagModel::class;
         };
     }

@@ -16,21 +16,25 @@ use Modules\Post\Entities\Thread\ThreadProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read User $user
  * @property-read RecordModel $entity
  * @property-read ThreadModel[]|Collection $children
+ *
  * @method ThreadEntityModel toEntity()
  */
 class ThreadModel extends BaseModel
 {
     use HasFactory;
-    use ThreadProps;
     use SoftDeletes;
+    use ThreadProps;
 
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
     protected $with = ['children', 'user'];
 
     public static function table($alias = null): string
@@ -40,7 +44,8 @@ class ThreadModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ThreadModel::class;
         };
     }
@@ -54,7 +59,7 @@ class ThreadModel extends BaseModel
         });
 
         static::deleting(function (ThreadModel $thread) {
-            $thread->children->each(fn($child) => $child->delete());
+            $thread->children->each(fn ($child) => $child->delete());
         });
     }
 

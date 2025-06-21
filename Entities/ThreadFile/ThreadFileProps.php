@@ -10,6 +10,4 @@ namespace Modules\Post\Entities\ThreadFile;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ThreadFileProps
-{
-}
+trait ThreadFileProps {}

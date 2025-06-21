@@ -10,8 +10,11 @@ use Modules\Post\Entities\ThreadFile\ThreadFileProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read ThreadFileModel $model
+ *
  * @method ThreadFileEntityModel toEntity()
  */
 class ThreadFileModel extends BaseModel
@@ -26,7 +29,8 @@ class ThreadFileModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ThreadFileModel::class;
         };
     }

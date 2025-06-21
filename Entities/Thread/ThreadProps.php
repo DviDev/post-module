@@ -12,6 +12,4 @@ namespace Modules\Post\Entities\Thread;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ThreadProps
-{
-}
+trait ThreadProps {}

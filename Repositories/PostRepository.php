@@ -8,7 +8,9 @@ use Modules\Post\Models\PostModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method self obj()
  * @method PostModel model()
  * @method PostEntityModel find($id)
@@ -20,7 +22,7 @@ use Modules\Post\Models\PostModel;
 class PostRepository extends BaseRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function modelClass(): string
     {
