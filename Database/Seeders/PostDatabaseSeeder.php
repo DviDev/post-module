@@ -26,11 +26,11 @@ class PostDatabaseSeeder extends BaseSeeder
     {
         Model::unguard();
 
-        $this->commandWarn(__CLASS__, "🌱 seeding");
+        $this->commandWarn(__CLASS__, '🌱 seeding');
 
         $modules = collect(Module::allEnabled());
         if ($modules->contains('DBMap')) {
-            (new ScanTableDomain())->scan('post');
+            (new ScanTableDomain)->scan('post');
         }
 
         $me = User::find(1);
@@ -72,31 +72,31 @@ class PostDatabaseSeeder extends BaseSeeder
     protected function createPosts(User $me): array|Collection
     {
         return PostModel::factory(config('post.SEED_POSTS_COUNT'))->for($me)
-            ->afterCreating(fn(PostModel $post) => $this->createPostTags($post))
+            ->afterCreating(fn (PostModel $post) => $this->createPostTags($post))
             ->create([
                 'thread_id' => ThreadModel::factory()->create()->id,
-                'record_id' => RecordModel::factory()->create()->id
+                'record_id' => RecordModel::factory()->create()->id,
             ]);
     }
 
-    function createPostTags(PostModel $post): void
+    public function createPostTags(PostModel $post): void
     {
         PostTagModel::factory()->for($post, 'post')->count(config('post.SEED_POST_TAGS_COUNT'))->create();
     }
 
-    function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
+    public function syncWorkspaceWithPost(WorkspaceModel $workspace, PostModel $post): void
     {
         WorkspacePostModel::factory()->for($workspace, 'workspace')->for($post, 'post')->create();
     }
 
-    function createWorkspaceParticipantPostVotes(PostModel $post, Collection $participants): void
+    public function createWorkspaceParticipantPostVotes(PostModel $post, Collection $participants): void
     {
         $participants->each(function (User $user) use ($post) {
             $postVote = ThreadVoteEntityModel::props();
-            $like = fn(Factory $factory) => $factory->create([$postVote->like => 1]);
-            $dislike = fn(Factory $factory) => $factory->create([$postVote->dislike => 1]);
+            $like = fn (Factory $factory) => $factory->create([$postVote->like => 1]);
+            $dislike = fn (Factory $factory) => $factory->create([$postVote->dislike => 1]);
 
-            /**@var \Closure $choice */
+            /** @var \Closure $choice */
             $choice = collect([$like, $dislike])->random();
 
             $thread = $post->thread;
@@ -107,7 +107,7 @@ class PostDatabaseSeeder extends BaseSeeder
         });
     }
 
-    function createWorkspaceParticipantPostComments(PostModel $post, Collection $participants): void
+    public function createWorkspaceParticipantPostComments(PostModel $post, Collection $participants): void
     {
         $entity = RecordModel::factory()->create();
         $post->record_id = $entity->id;
@@ -117,12 +117,12 @@ class PostDatabaseSeeder extends BaseSeeder
             ThreadModel::factory(config('post.SEED_POST_COMMENTS_COUNT'))->for($user)->create(['record_id' => $post->record_id]);
         });
         foreach ($post->comments() as $comment) {
-            $participants->each(function (User $user) use ($post, $comment) {
+            $participants->each(function (User $user) use ($comment) {
                 $vote = ThreadVoteEntityModel::props();
-                $fnUpVote = fn(Factory $factory) => $factory->create([$vote->like => 1]);
-                $fnDownVote = fn(Factory $factory) => $factory->create([$vote->dislike => 1]);
+                $fnUpVote = fn (Factory $factory) => $factory->create([$vote->like => 1]);
+                $fnDownVote = fn (Factory $factory) => $factory->create([$vote->dislike => 1]);
 
-                /**@var \Closure $choice */
+                /** @var \Closure $choice */
                 $choice = collect([$fnUpVote, $fnDownVote])->random();
 
                 $factory = ThreadVoteModel::factory()->for($comment, 'comment')->for($user, 'user');

@@ -7,7 +7,4 @@ namespace Modules\Post\Entities\PostTag;
  * @property $post_id
  * @property $tag
  */
-trait PostTagProps
-{
-
-}
+trait PostTagProps {}

@@ -15,7 +15,4 @@ namespace Modules\Post\Entities\Post;
  * @property $updated_at
  * @property $deleted_at
  */
-trait PostProps
-{
-
-}
+trait PostProps {}

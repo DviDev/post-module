@@ -8,7 +8,9 @@ use Modules\Post\Models\PostTagModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method self obj()
  * @method PostTagModel model()
  * @method PostTagEntityModel find($id)
@@ -20,7 +22,7 @@ use Modules\Post\Models\PostTagModel;
 class PostTagRepository extends BaseRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function modelClass(): string
     {

@@ -17,26 +17,27 @@ class PostSave extends FormRequest
     public function rules()
     {
         $p = PostEntityModel::props('post');
+
         return [
             $p->id => 'required',
             $p->user_id => [
                 'required',
                 Rule::unique(PostModel::table())
                     ->where('user_id', $this->get($p->user_id))
-                    ->where('title', $this->get($p->title))
+                    ->where('title', $this->get($p->title)),
             ],
             $p->title => [
                 'required',
                 Rule::unique('posts')
                     ->where('user_id', $this->get($p->user_id))
                     ->where('title', $this->get($p->title)),
-                'between:0,255'
+                'between:0,255',
             ],
             $p->content => 'required',
             $p->thumbnail_image_path => 'nullable|between:0,255',
             $p->created_at => 'nullable',
             $p->updated_at => 'nullable',
-            $p->deleted_at => 'nullable'
+            $p->deleted_at => 'nullable',
         ];
     }
 

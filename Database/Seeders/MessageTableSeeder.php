@@ -30,21 +30,21 @@ class MessageTableSeeder extends BaseSeeder
             ->sequence(
                 [$p->parent_id => null],
                 [$p->parent_id => ThreadModel::query()->inRandomOrder()->first()->id ?? null])
-            ->afterCreating(fn(ThreadModel $m) => $this->commentVotes($m, $user))
+            ->afterCreating(fn (ThreadModel $m) => $this->commentVotes($m, $user))
             ->create();
     }
 
     protected function commentVotes($comment, User $user): void
     {
         $p = ThreadVoteEntityModel::props();
-        $fnUpVote = fn(Factory $factory) => $factory->create([$p->like => 1]);
-        $fnDownVote = fn(Factory $factory) => $factory->create([$p->dislike => 1]);
+        $fnUpVote = fn (Factory $factory) => $factory->create([$p->like => 1]);
+        $fnDownVote = fn (Factory $factory) => $factory->create([$p->dislike => 1]);
 
-        /**@var \Closure $choice */
+        /** @var \Closure $choice */
         $choice = collect([$fnUpVote, $fnDownVote])->random();
         $factory = ThreadVoteModel::factory()->for($comment)->for($user);
 
-        /**@var ThreadVoteModel $vote */
+        /** @var ThreadVoteModel $vote */
         $choice($factory);
     }
 }

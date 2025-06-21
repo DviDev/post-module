@@ -12,6 +12,4 @@ namespace Modules\Post\Entities\ThreadVote;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ThreadVoteProps
-{
-}
+trait ThreadVoteProps {}

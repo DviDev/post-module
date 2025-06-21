@@ -16,19 +16,22 @@ use Modules\Post\Services\Message\HasMessage;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read PostTagModel[] $tags
  * @property-read User $user
  * @property-read RecordModel $entity
  * @property-read ThreadModel $thread
+ *
  * @method PostEntityModel toEntity()
  */
 class PostModel extends BaseModel
 {
     use HasFactory;
+    use HasMessage;
     use PostProps;
     use SoftDeletes;
-    use HasMessage;
 
     public static function table($alias = null): string
     {
@@ -37,7 +40,8 @@ class PostModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = PostModel::class;
         };
     }
@@ -60,7 +64,7 @@ class PostModel extends BaseModel
     public function comments(): HasMany
     {
         return $this->hasMany(ThreadModel::class, 'record_id', 'record_id');
-//        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'record_id', 'record_id', 'item2');
+        //        return $this->hasManyThrough(CommentModel::class, EntityRelationModel::class, 'item1', 'record_id', 'record_id', 'item2');
     }
 
     public function entity(): BelongsTo

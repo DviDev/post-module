@@ -10,7 +10,7 @@ trait HasMessage
 {
     public function addMessage(ThreadModel $comment): ThreadModel
     {
-        if (!$this->record_id) {
+        if (! $this->record_id) {
             $this->record_id = RecordModel::create()->id;
             $this->save();
         }
@@ -20,6 +20,7 @@ trait HasMessage
 
         $comment->record_id = $commentItem->id;
         $comment->save();
+
         return $comment;
     }
 }

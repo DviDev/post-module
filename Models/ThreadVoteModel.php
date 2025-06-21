@@ -12,9 +12,12 @@ use Modules\Post\Entities\ThreadVote\ThreadVoteProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read ThreadModel $thread
  * @property-read User $user
+ *
  * @method ThreadVoteEntityModel toEntity()
  */
 class ThreadVoteModel extends BaseModel
@@ -29,7 +32,8 @@ class ThreadVoteModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ThreadVoteModel::class;
         };
     }

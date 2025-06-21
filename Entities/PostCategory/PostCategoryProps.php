@@ -11,6 +11,4 @@ namespace Modules\Post\Entities\PostCategory;
  * @property $updated_at
  * @property $deleted_at
  */
-trait PostCategoryProps
-{
-}
+trait PostCategoryProps {}
