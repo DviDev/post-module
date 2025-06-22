@@ -2,6 +2,7 @@
 
 namespace Modules\Post\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Base\Repository\BaseRepository;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Models\PostModel;
@@ -16,7 +17,7 @@ use Modules\Post\Models\PostModel;
  * @method PostEntityModel find($id)
  * @method PostModel first()
  * @method PostModel findOrNew($id)
- * @method PostModel firstOrNew($query)
+ * @method PostModel firstOrNew(Builder|\Illuminate\Database\Query\Builder $query)
  * @method PostEntityModel findOrFail($id)
  */
 class PostRepository extends BaseRepository
