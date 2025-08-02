@@ -18,7 +18,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Post\\": ""
+            "Modules\\Post\\": "app/",
+            "Modules\\Post\\Database\\Seeders\\": "database/Seeders/",
+            "Modules\\Post\\Database\\Migrations\\": "database/Migrations/"
         }
     }
 }
