@@ -3,8 +3,8 @@
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
-use Modules\Base\Models\BaseModel;
 use Modules\Post\Entities\PostCategory\PostCategoryEntityModel;
 use Modules\Post\Entities\PostCategory\PostCategoryProps;
 
