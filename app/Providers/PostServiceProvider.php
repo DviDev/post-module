@@ -5,10 +5,6 @@ namespace Modules\Post\Providers;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
-use Modules\Post\Http\Livewire\PostCommentTable;
-use Modules\Post\Http\Livewire\PostCommentVoteTable;
-use Modules\Post\Http\Livewire\PostTable;
-use Modules\Post\Http\Livewire\PostTagTable;
 
 class PostServiceProvider extends ServiceProvider
 {
