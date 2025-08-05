@@ -9,7 +9,5 @@ namespace Modules\Post\Entities\ThreadVote;
  * @property $like
  * @property $dislike
  * @property $created_at
- * @property $updated_at
- * @property $deleted_at
  */
 trait ThreadVoteProps {}
