@@ -25,6 +25,8 @@ class ThreadVoteModel extends BaseModel
     use HasFactory;
     use ThreadVoteProps;
 
+    public $timestamps = false;
+
     public static function table($alias = null): string
     {
         return self::dbTable('thread_votes', $alias);
