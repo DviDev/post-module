@@ -39,10 +39,7 @@ class PostServiceProvider extends ServiceProvider
     public function register()
     {
         Livewire::component('post::page.posts', PostsPage::class);
-        Livewire::component('post::comment-table', PostCommentTable::class);
-        Livewire::component('post::comment-vote-table', PostCommentVoteTable::class);
-        Livewire::component('post::table', PostTable::class);
-        Livewire::component('post::tag-table', PostTagTable::class);
+
         $this->app->register(RouteServiceProvider::class);
     }
 
