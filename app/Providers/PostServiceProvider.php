@@ -5,10 +5,6 @@ namespace Modules\Post\Providers;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
-use Modules\Post\Http\Livewire\PostCommentTable;
-use Modules\Post\Http\Livewire\PostCommentVoteTable;
-use Modules\Post\Http\Livewire\PostTable;
-use Modules\Post\Http\Livewire\PostTagTable;
 
 class PostServiceProvider extends ServiceProvider
 {
@@ -43,10 +39,7 @@ class PostServiceProvider extends ServiceProvider
     public function register()
     {
         Livewire::component('post::page.posts', PostsPage::class);
-        Livewire::component('post::comment-table', PostCommentTable::class);
-        Livewire::component('post::comment-vote-table', PostCommentVoteTable::class);
-        Livewire::component('post::table', PostTable::class);
-        Livewire::component('post::tag-table', PostTagTable::class);
+
         $this->app->register(RouteServiceProvider::class);
     }
 
