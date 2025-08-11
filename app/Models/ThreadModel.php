@@ -55,7 +55,7 @@ class ThreadModel extends BaseModel
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->record_id = $model->record_id ?: RecordModel::create(['name' => 'empty', 'type_id' => 1])->id;
+            $model->record_id = $model->record_id ?: RecordModel::factory()->create()->id;
         });
 
         static::deleting(function (ThreadModel $thread) {
