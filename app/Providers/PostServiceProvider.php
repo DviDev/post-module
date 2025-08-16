@@ -12,7 +12,6 @@ class PostServiceProvider extends ServiceProvider
      * @var string
      */
     protected $moduleName = 'Post';
-
     /**
      * @var string
      */
@@ -28,19 +27,26 @@ class PostServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+
+        $this->registerComponents();
+
         $this->loadMigrationsFrom(module_path($this->moduleName, 'database/Migrations'));
     }
 
     /**
-     * Register the service provider.
+     * Register translations.
      *
      * @return void
      */
-    public function register()
+    public function registerTranslations()
     {
-        Livewire::component('post::page.posts', PostsPage::class);
+        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
 
-        $this->app->register(RouteServiceProvider::class);
+        if (is_dir($langPath)) {
+            $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
+        } else {
+            $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
+        }
     }
 
     /**
@@ -51,7 +57,7 @@ class PostServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php'),
+            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower
@@ -65,31 +71,42 @@ class PostServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
+        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath,
-        ], ['views', $this->moduleNameLower.'-module-views']);
+        ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
 
+    private function getPublishableViewPaths(): array
+    {
+        $paths = [];
+        foreach (\Config::get('view.paths') as $path) {
+            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
+                $paths[] = $path . '/modules/' . $this->moduleNameLower;
+            }
+        }
+
+        return $paths;
+    }
+
+    protected function registerComponents(): void
+    {
+        Livewire::component('post::page.posts', PostsPage::class);
+    }
+
     /**
-     * Register translations.
+     * Register the service provider.
      *
      * @return void
      */
-    public function registerTranslations()
+    public function register()
     {
-        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
-        } else {
-            $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
-        }
+        $this->app->register(RouteServiceProvider::class);
     }
 
     /**
@@ -100,17 +117,5 @@ class PostServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
-    }
-
-    private function getPublishableViewPaths(): array
-    {
-        $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
-                $paths[] = $path.'/modules/'.$this->moduleNameLower;
-            }
-        }
-
-        return $paths;
     }
 }
