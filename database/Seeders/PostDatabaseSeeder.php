@@ -56,7 +56,7 @@ class PostDatabaseSeeder extends BaseSeeder
             }
         }
         if ($modules->contains('Project')) {
-            $module = ProjectModuleModel::byName('Post');
+            $module = ProjectModuleModel::byNameOrFactory('Post');
 
             $module->project->posts()->attach(PostModel::where('user_id', $me->id)->get()->modelKeys());
         }
