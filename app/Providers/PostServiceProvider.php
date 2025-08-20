@@ -5,6 +5,8 @@ namespace Modules\Post\Providers;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
+use Modules\Post\Listeners\TranslateViewElementPropertiesListener;
+use Modules\View\Events\ElementPropertyCreatedEvent;
 
 class PostServiceProvider extends ServiceProvider
 {
@@ -44,8 +46,10 @@ class PostServiceProvider extends ServiceProvider
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom($langPath);
         } else {
-            $this->loadTranslationsFrom(module_path($this->moduleName, 'resources/lang'), $this->moduleNameLower);
+            $this->loadTranslationsFrom(module_path($this->moduleName, 'lang'), $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'lang'));
         }
     }
 
@@ -107,6 +111,8 @@ class PostServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        \Event::listen(ElementPropertyCreatedEvent::class, TranslateViewElementPropertiesListener::class);
     }
 
     /**
