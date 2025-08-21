@@ -5,7 +5,7 @@ namespace Modules\Post\Listeners;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Project\Events\EntityAttributesCreatedEvent;
-use Modules\Project\Models\ProjectEntityAttributeModel;
+use Modules\Project\Models\ProjectModuleEntityAttributeModel;
 
 class DefineSearchableAttributes
 {
@@ -23,7 +23,7 @@ class DefineSearchableAttributes
         }
     }
 
-    protected function default(ProjectEntityAttributeModel $attribute): void
+    protected function default(ProjectModuleEntityAttributeModel $attribute): void
     {
         if ($this->event->entity->name !== PostModel::table()) {
             return;
