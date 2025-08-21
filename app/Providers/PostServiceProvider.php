@@ -2,12 +2,15 @@
 
 namespace Modules\Post\Providers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
 use Modules\Post\Listeners\CreateMenuItemsListener;
+use Modules\Post\Listeners\DefineSearchableAttributes;
 use Modules\Post\Listeners\TranslateViewElementPropertiesListener;
 use Modules\Project\Events\CreateMenuItemsEvent;
+use Modules\Project\Events\EntityAttributesCreatedEvent;
 use Modules\View\Events\ElementPropertyCreatedEvent;
 
 class PostServiceProvider extends ServiceProvider
@@ -116,6 +119,7 @@ class PostServiceProvider extends ServiceProvider
 
         \Event::listen(ElementPropertyCreatedEvent::class, TranslateViewElementPropertiesListener::class);
         \Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
+        Event::listen(EntityAttributesCreatedEvent::class, DefineSearchableAttributes::class);
     }
 
     /**
