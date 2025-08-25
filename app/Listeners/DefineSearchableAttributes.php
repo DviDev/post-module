@@ -2,37 +2,17 @@
 
 namespace Modules\Post\Listeners;
 
-use Modules\Post\Entities\Post\PostEntityModel;
-use Modules\Post\Models\PostModel;
-use Modules\Project\Events\EntityAttributesCreatedEvent;
-use Modules\Project\Models\ProjectModuleEntityAttributeModel;
+use Modules\Project\Contracts\DefineSearchableAttributesContract;
 
-class DefineSearchableAttributes
+class DefineSearchableAttributes extends DefineSearchableAttributesContract
 {
-    private EntityAttributesCreatedEvent $event;
-
-    public function handle(EntityAttributesCreatedEvent $event): void
+    protected function moduleName(): string
     {
-        $this->event = $event;
-        if ($event->entity->module->name !== config('post.name')) {
-            return;
-        }
-
-        foreach ($event->entity->entityAttributes as $attribute) {
-            $this->default($attribute);
-        }
+        return config('post.name');
     }
 
-    protected function default(ProjectModuleEntityAttributeModel $attribute): void
+    public function searchableFields(): array
     {
-        if ($this->event->entity->name !== PostModel::table()) {
-            return;
-        }
-        $p = PostEntityModel::props();
-        if (in_array($attribute->name, [
-            $p->id,
-        ])) {
-            $attribute->update(['searchable' => true]);
-        }
+        return [];
     }
 }

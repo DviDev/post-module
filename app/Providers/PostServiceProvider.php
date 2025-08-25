@@ -10,7 +10,7 @@ use Modules\Post\Listeners\CreateMenuItemsListener;
 use Modules\Post\Listeners\DefineSearchableAttributes;
 use Modules\Post\Listeners\TranslateViewElementPropertiesListener;
 use Modules\Project\Events\CreateMenuItemsEvent;
-use Modules\Project\Events\EntityAttributesCreatedEvent;
+use Modules\View\Events\DefineSearchableAttributesEvent;
 use Modules\View\Events\ElementPropertyCreatedEvent;
 
 class PostServiceProvider extends ServiceProvider
@@ -119,7 +119,7 @@ class PostServiceProvider extends ServiceProvider
 
         \Event::listen(ElementPropertyCreatedEvent::class, TranslateViewElementPropertiesListener::class);
         \Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
-        Event::listen(EntityAttributesCreatedEvent::class, DefineSearchableAttributes::class);
+        Event::listen(DefineSearchableAttributesEvent::class, DefineSearchableAttributes::class);
     }
 
     /**
