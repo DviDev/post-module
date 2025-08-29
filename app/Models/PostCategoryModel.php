@@ -2,7 +2,6 @@
 
 namespace Modules\Post\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Post\Entities\PostCategory\PostCategoryEntityModel;
@@ -19,7 +18,6 @@ use Modules\Post\Entities\PostCategory\PostCategoryProps;
  */
 class PostCategoryModel extends BaseModel
 {
-    use HasFactory;
     use PostCategoryProps;
 
     public static function table($alias = null): string
@@ -29,8 +27,7 @@ class PostCategoryModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = PostCategoryModel::class;
         };
     }
