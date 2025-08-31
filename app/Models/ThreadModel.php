@@ -3,7 +3,6 @@
 namespace Modules\Post\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,14 +26,12 @@ use Modules\Post\Entities\Thread\ThreadProps;
  */
 class ThreadModel extends BaseModel
 {
-    use HasFactory;
     use SoftDeletes;
     use ThreadProps;
 
     protected $casts = [
         'created_at' => 'datetime',
     ];
-
     protected $with = ['children', 'user'];
 
     public static function table($alias = null): string
@@ -44,8 +41,7 @@ class ThreadModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = ThreadModel::class;
         };
     }
@@ -59,7 +55,7 @@ class ThreadModel extends BaseModel
         });
 
         static::deleting(function (ThreadModel $thread) {
-            $thread->children->each(fn ($child) => $child->delete());
+            $thread->children->each(fn($child) => $child->delete());
         });
     }
 

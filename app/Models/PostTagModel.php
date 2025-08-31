@@ -2,7 +2,6 @@
 
 namespace Modules\Post\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
@@ -20,7 +19,6 @@ use Modules\Post\Entities\PostTag\PostTagProps;
  */
 class PostTagModel extends BaseModel
 {
-    use HasFactory;
     use PostTagProps;
 
     public function modelEntity(): string
@@ -30,8 +28,7 @@ class PostTagModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = PostTagModel::class;
         };
     }

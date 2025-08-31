@@ -2,7 +2,6 @@
 
 namespace Modules\Post\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Post\Entities\ThreadFile\ThreadFileEntityModel;
@@ -19,7 +18,6 @@ use Modules\Post\Entities\ThreadFile\ThreadFileProps;
  */
 class ThreadFileModel extends BaseModel
 {
-    use HasFactory;
     use ThreadFileProps;
 
     public static function table($alias = null): string
@@ -29,8 +27,7 @@ class ThreadFileModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = ThreadFileModel::class;
         };
     }

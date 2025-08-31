@@ -3,7 +3,6 @@
 namespace Modules\Post\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,7 +27,6 @@ use Modules\Post\Services\Message\HasMessage;
  */
 class PostModel extends BaseModel
 {
-    use HasFactory;
     use HasMessage;
     use PostProps;
     use SoftDeletes;
@@ -40,8 +38,7 @@ class PostModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = PostModel::class;
         };
     }
