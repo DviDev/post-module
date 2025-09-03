@@ -5,9 +5,11 @@ namespace Modules\Post\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Modules\DBMap\Events\ScanTableEvent;
 use Modules\Post\Http\Livewire\Pages\PostsPage;
 use Modules\Post\Listeners\CreateMenuItemsListener;
 use Modules\Post\Listeners\DefineSearchableAttributes;
+use Modules\Post\Listeners\ScanTablePostListener;
 use Modules\Post\Listeners\TranslateViewElementPropertiesListener;
 use Modules\Project\Events\CreateMenuItemsEvent;
 use Modules\View\Events\DefineSearchableAttributesEvent;
@@ -19,6 +21,7 @@ class PostServiceProvider extends ServiceProvider
      * @var string
      */
     protected $moduleName = 'Post';
+
     /**
      * @var string
      */
@@ -47,7 +50,7 @@ class PostServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
+        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
@@ -66,7 +69,7 @@ class PostServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower . '.php'),
+            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower
@@ -80,13 +83,13 @@ class PostServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
+        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath,
-        ], ['views', $this->moduleNameLower . '-module-views']);
+        ], ['views', $this->moduleNameLower.'-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -95,8 +98,8 @@ class PostServiceProvider extends ServiceProvider
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
+            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
+                $paths[] = $path.'/modules/'.$this->moduleNameLower;
             }
         }
 
@@ -117,9 +120,10 @@ class PostServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
 
-        \Event::listen(ElementPropertyCreatedEvent::class, TranslateViewElementPropertiesListener::class);
-        \Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
+        Event::listen(ElementPropertyCreatedEvent::class, TranslateViewElementPropertiesListener::class);
+        Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
         Event::listen(DefineSearchableAttributesEvent::class, DefineSearchableAttributes::class);
+        Event::listen(ScanTableEvent::class, ScanTablePostListener::class);
     }
 
     /**
