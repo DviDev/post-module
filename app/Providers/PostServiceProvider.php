@@ -13,7 +13,7 @@ use Modules\Post\Listeners\ScanTablePostListener;
 use Modules\Post\Listeners\TranslateViewElementPropertiesListener;
 use Modules\Project\Events\CreateMenuItemsEvent;
 use Modules\View\Events\DefineSearchableAttributesEvent;
-use Modules\View\Events\ElementPropertyCreatedEvent;
+use Modules\View\Events\ElementPropertyCreatingEvent;
 
 class PostServiceProvider extends BaseServiceProviderContract
 {
@@ -29,12 +29,12 @@ class PostServiceProvider extends BaseServiceProviderContract
 
     public function getModuleName(): string
     {
-        return config('post.name');
+        return 'Post';
     }
 
     public function getModuleNameLower(): string
     {
-        return strtolower(config('post.name'));
+        return 'post';
     }
 
     protected function registerComponents(): void
@@ -44,7 +44,7 @@ class PostServiceProvider extends BaseServiceProviderContract
 
     protected function registerEvents(): void
     {
-        Event::listen(ElementPropertyCreatedEvent::class, TranslateViewElementPropertiesListener::class);
+        Event::listen(ElementPropertyCreatingEvent::class, TranslateViewElementPropertiesListener::class);
         Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
         Event::listen(DefineSearchableAttributesEvent::class, DefineSearchableAttributes::class);
         Event::listen(ScanTableEvent::class, ScanTablePostListener::class);
