@@ -26,7 +26,7 @@ class PostDatabaseSeeder extends BaseSeeder
     {
         Model::unguard();
 
-        $this->commandWarn(__CLASS__, '🌱 seeding');
+        $this->seeding();
 
         $modules = collect(Module::allEnabled());
         if ($modules->contains('DBMap')) {
@@ -65,7 +65,7 @@ class PostDatabaseSeeder extends BaseSeeder
             $this->call(class: PermissionTableSeeder::class, parameters: ['module' => $module]);
         }
 
-        $this->commandInfo(__CLASS__, '🟢 done');
+        $this->done();
     }
 
     /**@return PostModel[]|Collection */
