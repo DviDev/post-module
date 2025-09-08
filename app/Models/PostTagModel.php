@@ -28,7 +28,8 @@ class PostTagModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = PostTagModel::class;
         };
     }
