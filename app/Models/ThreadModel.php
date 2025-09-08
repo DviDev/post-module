@@ -32,6 +32,7 @@ class ThreadModel extends BaseModel
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
     protected $with = ['children', 'user'];
 
     public static function table($alias = null): string
@@ -41,7 +42,8 @@ class ThreadModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ThreadModel::class;
         };
     }
@@ -55,7 +57,7 @@ class ThreadModel extends BaseModel
         });
 
         static::deleting(function (ThreadModel $thread) {
-            $thread->children->each(fn($child) => $child->delete());
+            $thread->children->each(fn ($child) => $child->delete());
         });
     }
 
