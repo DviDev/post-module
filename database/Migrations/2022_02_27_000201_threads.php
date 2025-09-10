@@ -7,7 +7,6 @@ use Modules\Post\Entities\Thread\ThreadEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('threads', function (Blueprint $table) {
@@ -38,7 +37,6 @@ return new class extends Migration
             $table->comment('generic messages');
         });
     }
-
 
     public function down()
     {

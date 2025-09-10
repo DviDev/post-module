@@ -7,7 +7,6 @@ use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('thread_votes', function (Blueprint $table) {
@@ -26,7 +25,6 @@ return new class extends Migration
             $table->timestamp($p->created_at)->useCurrent();
         });
     }
-
 
     public function down()
     {

@@ -7,7 +7,6 @@ use Modules\Post\Entities\PostTag\PostTagEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('thread_post_tags', function (Blueprint $table) {
@@ -20,7 +19,6 @@ return new class extends Migration
             $table->string($prop->tag, 50);
         });
     }
-
 
     public function down()
     {

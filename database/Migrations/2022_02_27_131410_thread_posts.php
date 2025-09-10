@@ -7,7 +7,6 @@ use Modules\Post\Entities\Post\PostEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('thread_posts', function (Blueprint $table) {
@@ -35,7 +34,6 @@ return new class extends Migration
 
         });
     }
-
 
     public function down()
     {
