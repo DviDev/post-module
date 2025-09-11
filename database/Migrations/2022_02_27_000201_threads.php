@@ -7,11 +7,6 @@ use Modules\Post\Entities\Thread\ThreadEntityModel;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('threads', function (Blueprint $table) {
@@ -43,11 +38,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('threads');
