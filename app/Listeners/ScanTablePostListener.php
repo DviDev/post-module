@@ -10,6 +10,6 @@ class ScanTablePostListener implements ShouldQueue
 {
     public function handle(ScanTableEvent $event): void
     {
-        new ScanTableDomain()->scan('post', 'thread');
+        (new ScanTableDomain)->scan('post', 'thread');
     }
 }
