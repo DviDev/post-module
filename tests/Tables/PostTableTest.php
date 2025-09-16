@@ -3,19 +3,16 @@
 namespace Modules\Post\Tests\Tables;
 
 use Modules\Base\Services\Tests\BaseTest;
-use Modules\Post\Entities\PostTag\PostTagEntityModel;
-use Modules\Post\Models\PostTagModel;
+use Modules\Post\Entities\Post\PostEntityModel;
+use Modules\Post\Models\PostModel;
 
-class PostTagTableTest extends BaseTest
+class PostTableTest extends BaseTest
 {
-    public function getEntityClass(): string|PostTagEntityModel
-    {
-        return PostTagEntityModel::class;
-    }
 
-    public function getModelClass(): string|PostTagModel
+
+    public function getModelClass(): string|PostModel
     {
-        return PostTagModel::class;
+        return PostModel::class;
     }
 
     public function test_table_must_exist()
@@ -53,7 +50,7 @@ class PostTagTableTest extends BaseTest
         parent::shouldDelete();
     }
 
-    protected function create(): PostTagModel
+    protected function create(): PostModel
     {
         return $this->getModelClass()::factory()->create();
     }

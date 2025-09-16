@@ -3,15 +3,16 @@
 namespace Modules\Post\Tests\Tables;
 
 use Modules\Base\Services\Tests\BaseTest;
-use Modules\Post\Entities\Thread\ThreadEntityModel;
-use Modules\Post\Models\ThreadModel;
+use Modules\Post\Entities\PostTag\PostTagEntityModel;
+use Modules\Post\Models\PostTagModel;
 
-/** @group app.message.table */
-class MessageTableTest extends BaseTest
+class PostTagTableTest extends BaseTest
 {
-    public function getEntityClass(): string|ThreadEntityModel
+
+
+    public function getModelClass(): string|PostTagModel
     {
-        return ThreadEntityModel::class;
+        return PostTagModel::class;
     }
 
     public function test_table_must_exist()
@@ -49,13 +50,8 @@ class MessageTableTest extends BaseTest
         parent::shouldDelete();
     }
 
-    protected function create(): ThreadModel
+    protected function create(): PostTagModel
     {
         return $this->getModelClass()::factory()->create();
-    }
-
-    public function getModelClass(): string|ThreadModel
-    {
-        return ThreadModel::class;
     }
 }

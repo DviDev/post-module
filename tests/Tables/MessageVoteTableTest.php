@@ -9,10 +9,6 @@ use Modules\Post\Models\ThreadVoteModel;
 /** @group app.message.table */
 class MessageVoteTableTest extends BaseTest
 {
-    public function getEntityClass(): string|ThreadVoteEntityModel
-    {
-        return ThreadVoteEntityModel::class;
-    }
 
     public function test_table_must_exist()
     {
