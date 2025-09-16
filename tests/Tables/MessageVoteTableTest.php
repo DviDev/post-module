@@ -5,8 +5,9 @@ namespace Modules\Post\Tests\Tables;
 use Modules\Base\Services\Tests\BaseTest;
 use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
 use Modules\Post\Models\ThreadVoteModel;
+use PHPUnit\Framework\Attributes\Group;
 
-/** @group app.message.table */
+#[Group("app.message.table")]
 class MessageVoteTableTest extends BaseTest
 {
 
