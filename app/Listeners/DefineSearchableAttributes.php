@@ -11,7 +11,7 @@ class DefineSearchableAttributes extends DefineSearchableAttributesContract
         return config('post.name');
     }
 
-    public function searchableFields(): array
+    protected function searchableFields(): array
     {
         return [];
     }
