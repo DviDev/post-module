@@ -6,7 +6,6 @@ namespace Modules\Post\Entities\Post;
  * @property $id
  * @property $record_id
  * @property $user_id
- * @property $poll_id
  * @property $thread_id
  * @property $title
  * @property $content
