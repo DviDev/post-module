@@ -48,7 +48,7 @@ final class PostDatabaseSeeder extends BaseSeeder
             foreach ($workspaces as $workspace) {
                 $posts = $this->createPosts($me);
 
-                $posts->each(function (PostModel $post) use ($workspace) {
+                $posts->each(function (PostModel $post) use ($workspace): void {
                     $this->syncWorkspaceWithPost($workspace, $post);
 
                     $participants = $workspace->participants;
@@ -83,7 +83,7 @@ final class PostDatabaseSeeder extends BaseSeeder
 
     public function createWorkspaceParticipantPostVotes(PostModel $post, Collection $participants): void
     {
-        $participants->each(function (User $user) use ($post) {
+        $participants->each(function (User $user) use ($post): void {
             $postVote = ThreadVoteEntityModel::props();
             $like = fn (Factory $factory) => $factory->create([$postVote->like => 1]);
             $dislike = fn (Factory $factory) => $factory->create([$postVote->dislike => 1]);
@@ -105,11 +105,11 @@ final class PostDatabaseSeeder extends BaseSeeder
         $post->record_id = $entity->id;
         $post->save();
 
-        $participants->each(function (User $user) use ($post) {
+        $participants->each(function (User $user) use ($post): void {
             ThreadModel::factory(config('post.SEED_POST_COMMENTS_COUNT'))->for($user)->create(['record_id' => $post->record_id]);
         });
         foreach ($post->comments() as $comment) {
-            $participants->each(function (User $user) use ($comment) {
+            $participants->each(function (User $user) use ($comment): void {
                 $vote = ThreadVoteEntityModel::props();
                 $fnUpVote = fn (Factory $factory) => $factory->create([$vote->like => 1]);
                 $fnDownVote = fn (Factory $factory) => $factory->create([$vote->dislike => 1]);

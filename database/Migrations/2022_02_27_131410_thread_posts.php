@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('thread_posts', function (Blueprint $table) {
+        Schema::create('thread_posts', function (Blueprint $table): void {
             $table->id();
             $p = PostEntityModel::props(null, true);
 

@@ -79,11 +79,11 @@ final class ThreadModel extends BaseModel
     {
         parent::boot();
 
-        self::creating(function (self $model) {
+        self::creating(function (self $model): void {
             $model->record_id = $model->record_id ?: RecordModel::factory()->create()->id;
         });
 
-        self::deleting(function (ThreadModel $thread) {
+        self::deleting(function (ThreadModel $thread): void {
             $thread->children->each(fn ($child) => $child->delete());
         });
     }

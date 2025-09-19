@@ -19,7 +19,7 @@ use Modules\Project\Services\DynamicRoutes;
 
 DynamicRoutes::all('Post');
 
-Route::prefix('post')->group(function () {
+Route::prefix('post')->group(function (): void {
     Route::get('/form/{model}', fn (PostModel $model) => view('view::components.form.dynamicform', compact('model')))
         ->name('admin.post.edit');
 

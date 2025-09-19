@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('thread_files', function (Blueprint $table) {
+        Schema::create('thread_files', function (Blueprint $table): void {
             $p = ThreadFileEntityModel::props(null, true);
             $table->id();
             $table->foreignId($p->thread_id)->references('id')->on('threads')

@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('thread_post_tags', function (Blueprint $table) {
+        Schema::create('thread_post_tags', function (Blueprint $table): void {
             $table->id();
 
             $prop = PostTagEntityModel::props(null, true);

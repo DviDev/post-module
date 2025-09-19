@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('threads', function (Blueprint $table) {
+        Schema::create('threads', function (Blueprint $table): void {
             $p = ThreadEntityModel::props(null, true);
 
             $table->id();

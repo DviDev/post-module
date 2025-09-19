@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('thread_post_categories', function (Blueprint $table) {
+        Schema::create('thread_post_categories', function (Blueprint $table): void {
             $p = PostCategoryEntityModel::props(null, true);
             $table->id();
             $table->foreignId($p->post_id)->references('id')->on('thread_posts')
