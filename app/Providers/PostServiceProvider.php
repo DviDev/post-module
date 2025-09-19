@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Providers;
 
 use Illuminate\Support\Facades\Event;
@@ -15,7 +17,7 @@ use Modules\Project\Events\CreateMenuItemsEvent;
 use Modules\View\Events\DefineSearchableAttributesEvent;
 use Modules\View\Events\ElementPropertyCreatingEvent;
 
-class PostServiceProvider extends BaseServiceProviderContract
+final class PostServiceProvider extends BaseServiceProviderContract
 {
     /**
      * Get the services provided by the provider.

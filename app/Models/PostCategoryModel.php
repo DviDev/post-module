@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Models;
 
 use Modules\Base\Contracts\BaseModel;
@@ -16,7 +18,7 @@ use Modules\Post\Entities\PostCategory\PostCategoryProps;
  *
  * @method PostCategoryEntityModel toEntity()
  */
-class PostCategoryModel extends BaseModel
+final class PostCategoryModel extends BaseModel
 {
     use PostCategoryProps;
 
@@ -25,16 +27,16 @@ class PostCategoryModel extends BaseModel
         return self::dbTable('thread_post_categories', $alias);
     }
 
+    public function modelEntity(): string
+    {
+        return PostCategoryEntityModel::class;
+    }
+
     protected static function newFactory(): BaseFactory
     {
         return new class extends BaseFactory
         {
             protected $model = PostCategoryModel::class;
         };
-    }
-
-    public function modelEntity(): string
-    {
-        return PostCategoryEntityModel::class;
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Tests\Tables;
 
 use Modules\Base\Services\Tests\BaseTest;
 use Modules\Post\Models\PostTagModel;
 
-class PostTagTableTest extends BaseTest
+final class PostTagTableTest extends BaseTest
 {
     public function getModelClass(): string|PostTagModel
     {

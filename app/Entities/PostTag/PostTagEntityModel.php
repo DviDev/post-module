@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Entities\PostTag;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -18,7 +20,7 @@ use Modules\Post\Repositories\PostTagRepository;
  * @method static self props($alias = null, $force = null)
  * @method PostTagRepository repository()
  */
-class PostTagEntityModel extends BaseEntityModel
+final class PostTagEntityModel extends BaseEntityModel
 {
     use PostTagProps;
 

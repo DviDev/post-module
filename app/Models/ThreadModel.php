@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Models;
 
 use App\Models\User;
@@ -24,7 +26,7 @@ use Modules\Post\Entities\Thread\ThreadProps;
  *
  * @method ThreadEntityModel toEntity()
  */
-class ThreadModel extends BaseModel
+final class ThreadModel extends BaseModel
 {
     use SoftDeletes;
     use ThreadProps;
@@ -38,27 +40,6 @@ class ThreadModel extends BaseModel
     public static function table($alias = null): string
     {
         return self::dbTable('threads', $alias);
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ThreadModel::class;
-        };
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function (self $model) {
-            $model->record_id = $model->record_id ?: RecordModel::factory()->create()->id;
-        });
-
-        static::deleting(function (ThreadModel $thread) {
-            $thread->children->each(fn ($child) => $child->delete());
-        });
     }
 
     public function modelEntity(): string
@@ -84,5 +65,26 @@ class ThreadModel extends BaseModel
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ThreadModel::class;
+        };
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function (self $model) {
+            $model->record_id = $model->record_id ?: RecordModel::factory()->create()->id;
+        });
+
+        self::deleting(function (ThreadModel $thread) {
+            $thread->children->each(fn ($child) => $child->delete());
+        });
     }
 }

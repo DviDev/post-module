@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Models;
 
 use App\Models\User;
@@ -19,7 +21,7 @@ use Modules\Post\Entities\ThreadVote\ThreadVoteProps;
  *
  * @method ThreadVoteEntityModel toEntity()
  */
-class ThreadVoteModel extends BaseModel
+final class ThreadVoteModel extends BaseModel
 {
     use ThreadVoteProps;
 
@@ -28,14 +30,6 @@ class ThreadVoteModel extends BaseModel
     public static function table($alias = null): string
     {
         return self::dbTable('thread_votes', $alias);
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ThreadVoteModel::class;
-        };
     }
 
     public function modelEntity(): string
@@ -51,5 +45,13 @@ class ThreadVoteModel extends BaseModel
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ThreadVoteModel::class;
+        };
     }
 }

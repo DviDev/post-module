@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'name' => 'Post',
     'SEED_POST_COMMENT_VOTES_COUNT' => env('SEEDER_DEFAULT', 3),

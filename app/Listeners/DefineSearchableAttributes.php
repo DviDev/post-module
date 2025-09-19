@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Listeners;
 
 use Modules\Project\Contracts\DefineSearchableAttributesContract;
 
-class DefineSearchableAttributes extends DefineSearchableAttributesContract
+final class DefineSearchableAttributes extends DefineSearchableAttributesContract
 {
     protected function moduleName(): string
     {

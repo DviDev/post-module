@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Models;
 
 use Modules\Base\Contracts\BaseModel;
@@ -16,7 +18,7 @@ use Modules\Post\Entities\ThreadFile\ThreadFileProps;
  *
  * @method ThreadFileEntityModel toEntity()
  */
-class ThreadFileModel extends BaseModel
+final class ThreadFileModel extends BaseModel
 {
     use ThreadFileProps;
 
@@ -25,16 +27,16 @@ class ThreadFileModel extends BaseModel
         return self::dbTable('thread_files', $alias);
     }
 
+    public function modelEntity(): string
+    {
+        return ThreadFileEntityModel::class;
+    }
+
     protected static function newFactory(): BaseFactory
     {
         return new class extends BaseFactory
         {
             protected $model = ThreadFileModel::class;
         };
-    }
-
-    public function modelEntity(): string
-    {
-        return ThreadFileEntityModel::class;
     }
 }

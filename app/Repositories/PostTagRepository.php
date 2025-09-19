@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +22,7 @@ use Modules\Post\Models\PostTagModel;
  * @method PostTagModel firstOrNew(Builder|\Illuminate\Database\Query\Builder $query)
  * @method PostTagEntityModel findOrFail($id)
  */
-class PostTagRepository extends BaseRepository
+final class PostTagRepository extends BaseRepository
 {
     /**
      * {@inheritDoc}
