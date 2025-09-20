@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Models;
 
 use App\Models\User;
@@ -25,7 +27,7 @@ use Modules\Post\Services\Message\HasMessage;
  *
  * @method PostEntityModel toEntity()
  */
-class PostModel extends BaseModel
+final class PostModel extends BaseModel
 {
     use HasMessage;
     use PostProps;
@@ -34,14 +36,6 @@ class PostModel extends BaseModel
     public static function table($alias = null): string
     {
         return self::dbTable('thread_posts', $alias);
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = PostModel::class;
-        };
     }
 
     public function modelEntity(): string
@@ -73,5 +67,13 @@ class PostModel extends BaseModel
     public function thread(): BelongsTo
     {
         return $this->belongsTo(ThreadModel::class, 'thread_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = PostModel::class;
+        };
     }
 }

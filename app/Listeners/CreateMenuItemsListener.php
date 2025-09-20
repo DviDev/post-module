@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Listeners;
 
 use Modules\Project\Contracts\CreateMenuItemsListenerContract;
 
-class CreateMenuItemsListener extends CreateMenuItemsListenerContract
+final class CreateMenuItemsListener extends CreateMenuItemsListenerContract
 {
-    public function moduleName(): string
+    protected function moduleName(): string
     {
         return config('post.name');
     }

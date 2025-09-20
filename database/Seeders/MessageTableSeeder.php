@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Database\Seeders;
 
 use App\Models\User;
+use Closure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Base\Database\Seeders\BaseSeeder;
@@ -12,7 +15,7 @@ use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Post\Models\ThreadVoteModel;
 
-class MessageTableSeeder extends BaseSeeder
+final class MessageTableSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -40,7 +43,7 @@ class MessageTableSeeder extends BaseSeeder
         $fnUpVote = fn (Factory $factory) => $factory->create([$p->like => 1]);
         $fnDownVote = fn (Factory $factory) => $factory->create([$p->dislike => 1]);
 
-        /** @var \Closure $choice */
+        /** @var Closure $choice */
         $choice = collect([$fnUpVote, $fnDownVote])->random();
         $factory = ThreadVoteModel::factory()->for($comment)->for($user);
 

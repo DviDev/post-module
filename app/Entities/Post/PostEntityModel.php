@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Entities\Post;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -18,7 +20,7 @@ use Modules\Post\Repositories\PostRepository;
  * @method static self props($alias = null, $force = null)
  * @method PostRepository repository()
  */
-class PostEntityModel extends BaseEntityModel
+final class PostEntityModel extends BaseEntityModel
 {
     use PostProps;
 

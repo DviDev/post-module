@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +22,7 @@ use Modules\Post\Models\PostModel;
  * @method PostModel firstOrNew(Builder|\Illuminate\Database\Query\Builder $query)
  * @method PostEntityModel findOrFail($id)
  */
-class PostRepository extends BaseRepository
+final class PostRepository extends BaseRepository
 {
     /**
      * {@inheritDoc}

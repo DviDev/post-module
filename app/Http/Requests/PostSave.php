@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -7,7 +9,7 @@ use Illuminate\Validation\Rule;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Models\PostModel;
 
-class PostSave extends FormRequest
+final class PostSave extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

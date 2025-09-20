@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Entities\ThreadVote;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -16,7 +18,7 @@ use Modules\Post\Models\ThreadVoteModel;
  * @method static self new()
  * @method static self props($alias = null, $force = null)
  */
-class ThreadVoteEntityModel extends BaseEntityModel
+final class ThreadVoteEntityModel extends BaseEntityModel
 {
     use ThreadVoteProps;
 }

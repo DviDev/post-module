@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Database\Seeders;
 
 use App\Models\User;
+use Closure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -20,7 +23,7 @@ use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
 use Nwidart\Modules\Facades\Module;
 
-class PostDatabaseSeeder extends BaseSeeder
+final class PostDatabaseSeeder extends BaseSeeder
 {
     public function run()
     {
@@ -45,7 +48,7 @@ class PostDatabaseSeeder extends BaseSeeder
             foreach ($workspaces as $workspace) {
                 $posts = $this->createPosts($me);
 
-                $posts->each(function (PostModel $post) use ($workspace) {
+                $posts->each(function (PostModel $post) use ($workspace): void {
                     $this->syncWorkspaceWithPost($workspace, $post);
 
                     $participants = $workspace->participants;
@@ -68,17 +71,6 @@ class PostDatabaseSeeder extends BaseSeeder
         $this->done();
     }
 
-    /**@return PostModel[]|Collection */
-    protected function createPosts(User $me): array|Collection
-    {
-        return PostModel::factory(config('post.SEED_POSTS_COUNT'))->for($me)
-            ->afterCreating(fn (PostModel $post) => $this->createPostTags($post))
-            ->create([
-                'thread_id' => ThreadModel::factory()->create()->id,
-                'record_id' => RecordModel::factory()->create()->id,
-            ]);
-    }
-
     public function createPostTags(PostModel $post): void
     {
         PostTagModel::factory()->for($post, 'post')->count(config('post.SEED_POST_TAGS_COUNT'))->create();
@@ -91,12 +83,12 @@ class PostDatabaseSeeder extends BaseSeeder
 
     public function createWorkspaceParticipantPostVotes(PostModel $post, Collection $participants): void
     {
-        $participants->each(function (User $user) use ($post) {
+        $participants->each(function (User $user) use ($post): void {
             $postVote = ThreadVoteEntityModel::props();
             $like = fn (Factory $factory) => $factory->create([$postVote->like => 1]);
             $dislike = fn (Factory $factory) => $factory->create([$postVote->dislike => 1]);
 
-            /** @var \Closure $choice */
+            /** @var Closure $choice */
             $choice = collect([$like, $dislike])->random();
 
             $thread = $post->thread;
@@ -113,21 +105,32 @@ class PostDatabaseSeeder extends BaseSeeder
         $post->record_id = $entity->id;
         $post->save();
 
-        $participants->each(function (User $user) use ($post) {
+        $participants->each(function (User $user) use ($post): void {
             ThreadModel::factory(config('post.SEED_POST_COMMENTS_COUNT'))->for($user)->create(['record_id' => $post->record_id]);
         });
         foreach ($post->comments() as $comment) {
-            $participants->each(function (User $user) use ($comment) {
+            $participants->each(function (User $user) use ($comment): void {
                 $vote = ThreadVoteEntityModel::props();
                 $fnUpVote = fn (Factory $factory) => $factory->create([$vote->like => 1]);
                 $fnDownVote = fn (Factory $factory) => $factory->create([$vote->dislike => 1]);
 
-                /** @var \Closure $choice */
+                /** @var Closure $choice */
                 $choice = collect([$fnUpVote, $fnDownVote])->random();
 
                 $factory = ThreadVoteModel::factory()->for($comment, 'comment')->for($user, 'user');
                 $choice($factory);
             });
         }
+    }
+
+    /**@return PostModel[]|Collection */
+    protected function createPosts(User $me): array|Collection
+    {
+        return PostModel::factory(config('post.SEED_POSTS_COUNT'))->for($me)
+            ->afterCreating(fn (PostModel $post) => $this->createPostTags($post))
+            ->create([
+                'thread_id' => ThreadModel::factory()->create()->id,
+                'record_id' => RecordModel::factory()->create()->id,
+            ]);
     }
 }

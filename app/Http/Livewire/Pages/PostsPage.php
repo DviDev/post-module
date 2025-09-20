@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Http\Livewire\Pages;
 
 use Livewire\Component;
 
-class PostsPage extends Component
+final class PostsPage extends Component
 {
     public function render()
     {

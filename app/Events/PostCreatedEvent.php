@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Events;
 
 use Illuminate\Queue\SerializesModels;
 
-class PostCreatedEvent
+final class PostCreatedEvent
 {
     use SerializesModels;
 

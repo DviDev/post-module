@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,13 +19,23 @@ use Modules\Post\Entities\PostTag\PostTagProps;
  *
  * @method PostTagEntityModel toEntity()
  */
-class PostTagModel extends BaseModel
+final class PostTagModel extends BaseModel
 {
     use PostTagProps;
+
+    public static function table($alias = null): string
+    {
+        return self::dbTable('thread_post_tags', $alias);
+    }
 
     public function modelEntity(): string
     {
         return PostTagEntityModel::class;
+    }
+
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(PostModel::class, 'post_id');
     }
 
     protected static function newFactory(): BaseFactory
@@ -32,15 +44,5 @@ class PostTagModel extends BaseModel
         {
             protected $model = PostTagModel::class;
         };
-    }
-
-    public static function table($alias = null): string
-    {
-        return self::dbTable('thread_post_tags', $alias);
-    }
-
-    public function post(): BelongsTo
-    {
-        return $this->belongsTo(PostModel::class, 'post_id');
     }
 }
