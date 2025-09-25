@@ -18,7 +18,7 @@ use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Post\Models\ThreadVoteModel;
-use Modules\Project\Models\ProjectModuleModel;
+use Modules\Schema\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
 use Nwidart\Modules\Facades\Module;
