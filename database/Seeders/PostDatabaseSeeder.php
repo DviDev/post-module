@@ -18,7 +18,7 @@ use Modules\Post\Models\PostModel;
 use Modules\Post\Models\PostTagModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Post\Models\ThreadVoteModel;
-use Modules\Schema\Models\ProjectModuleModel;
+use Modules\Schema\Models\ModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
 use Nwidart\Modules\Facades\Module;
@@ -59,7 +59,7 @@ final class PostDatabaseSeeder extends BaseSeeder
             }
         }
         if ($modules->contains('Project')) {
-            $module = ProjectModuleModel::byNameOrFactory('Post');
+            $module = ModuleModel::byNameOrFactory('Post');
 
             $module->project->posts()->attach(PostModel::where('user_id', $me->id)->get()->modelKeys());
         }
