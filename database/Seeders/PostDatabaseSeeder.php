@@ -9,7 +9,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Modules\Base\Database\Seeders\BaseSeeder;
+use Modules\Base\Contracts\BaseSeeder;
 use Modules\Base\Models\RecordModel;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;

@@ -8,7 +8,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Base\Database\Seeders\BaseSeeder;
+use Modules\Base\Contracts\BaseSeeder;
 use Modules\Base\Models\RecordModel;
 use Modules\Post\Entities\Thread\ThreadEntityModel;
 use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
