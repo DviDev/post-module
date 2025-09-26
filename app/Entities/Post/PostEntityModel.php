@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Post\Entities\Post;
 
-use Modules\Base\Entities\BaseEntityModel;
+use Modules\Base\Contracts\BaseEntityModel;
 use Modules\Post\Models\PostModel;
 use Modules\Post\Repositories\PostRepository;
 
