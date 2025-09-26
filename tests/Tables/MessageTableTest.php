@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Post\Tests\Tables;
 
-use Modules\Base\Services\Tests\BaseTest;
+use Modules\Base\Contracts\Tests\BaseTest;
 use Modules\Post\Models\ThreadModel;
 use PHPUnit\Framework\Attributes\Group;
 

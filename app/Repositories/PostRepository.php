@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Post\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
-use Modules\Base\Repository\BaseRepository;
+use Modules\Base\Contracts\BaseRepository;
 use Modules\Post\Entities\Post\PostEntityModel;
 use Modules\Post\Models\PostModel;
 
