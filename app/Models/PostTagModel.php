@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Contracts\BaseFactory;
+use Modules\Base\Contracts\BaseModel;
 use Modules\Post\Entities\PostTag\PostTagEntityModel;
 use Modules\Post\Entities\PostTag\PostTagProps;
 
