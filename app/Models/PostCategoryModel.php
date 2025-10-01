@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Post\Models;
 
+use Modules\Base\Contracts\BaseFactory;
 use Modules\Base\Contracts\BaseModel;
-use Modules\Base\Factories\BaseFactory;
 use Modules\Post\Entities\PostCategory\PostCategoryEntityModel;
 use Modules\Post\Entities\PostCategory\PostCategoryProps;
 

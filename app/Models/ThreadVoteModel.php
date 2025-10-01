@@ -6,8 +6,8 @@ namespace Modules\Post\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Base\Contracts\BaseFactory;
 use Modules\Base\Contracts\BaseModel;
-use Modules\Base\Factories\BaseFactory;
 use Modules\Post\Entities\ThreadVote\ThreadVoteEntityModel;
 use Modules\Post\Entities\ThreadVote\ThreadVoteProps;
 
