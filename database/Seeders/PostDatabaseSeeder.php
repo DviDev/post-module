@@ -21,7 +21,6 @@ use Modules\Post\Models\ThreadVoteModel;
 use Modules\Schema\Models\ModuleModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Modules\Workspace\Models\WorkspacePostModel;
-use Nwidart\Modules\Facades\Module;
 
 final class PostDatabaseSeeder extends BaseSeeder
 {
@@ -31,8 +30,7 @@ final class PostDatabaseSeeder extends BaseSeeder
 
         $this->seeding();
 
-        $modules = collect(Module::allEnabled());
-        if ($modules->contains('DBMap')) {
+        if (moduleIsEnabled('DBMap')) {
             (new ScanTableDomain)->scan('post');
         }
 
@@ -40,7 +38,7 @@ final class PostDatabaseSeeder extends BaseSeeder
 
         $this->createPosts($me);
 
-        if ($modules->contains('Workspace')) {
+        if (moduleIsEnabled('Workspace')) {
             /*if (WorkspaceModel::byUserId($me->id)->count() == 0) {
                 WorkspaceModel::factory()->for($me)->create();
             }*/
@@ -58,7 +56,7 @@ final class PostDatabaseSeeder extends BaseSeeder
                 });
             }
         }
-        if ($modules->contains('Project')) {
+        if (moduleIsEnabled('Project')) {
             $module = ModuleModel::byNameOrFactory('Post');
 
             $module->project->posts()->attach(PostModel::where('user_id', $me->id)->get()->modelKeys());

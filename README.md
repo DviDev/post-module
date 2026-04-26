@@ -1,5 +1,5 @@
-# Post Module
-## Simple management of Posts
+# Thread Module
+## Simple Thread management
 
 ### Module Dependencies
 
