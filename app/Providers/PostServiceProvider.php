@@ -51,4 +51,9 @@ final class PostServiceProvider extends BaseServiceProviderContract
         Event::listen(DefineSearchableAttributesEvent::class, DefineSearchableAttributes::class);
         Event::listen(ScanTableEvent::class, ScanTablePostListener::class);
     }
+
+    protected function langPath(): string
+    {
+        return module_path($this->getModuleName(), 'resources/path');
+    }
 }
